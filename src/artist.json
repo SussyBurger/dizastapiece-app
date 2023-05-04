@@ -1,0 +1,38 @@
+{
+	"name": "Artist #1",
+	"avatar": "/cover/artist-male.jpg",
+	"albumCover": "/cover/album-cover.png",
+	"releaseYear": "2019",
+	"tracks": [
+		{
+			"id": 1,
+			"name": "Reaktion",
+			"path": "/songs/Reaktion.mp3",
+			"lyrics": false
+		},
+		{
+			"id": 2,
+			"name": "Run the Block",
+			"path": "/songs/Run the Block.mp3",
+			"lyrics": false
+		},
+		{
+			"id": 3,
+			"name": "Bigger Man",
+			"path": "/songs/Bigger Man.mp3",
+			"lyrics": false
+		},
+		{
+			"id": 4,
+			"name": "Day of Dead",
+			"path": "/songs/Day of Dead.mp3",
+			"lyrics": false
+		},
+		{
+			"id": 5,
+			"name": "Problem Kids",
+			"path": "/songs/Problem Kids.mp3",
+			"lyrics": false
+		}
+	]
+}

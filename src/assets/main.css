@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+	background-color: #ffffff;
+}
+
+div:has(> .router-link-exact-active):not(#logo) {
+	color: #da292a;
+	background-color: #ccc;
+	border-left: 5px solid #da292a;
+}
+
+.dark div:has(> .router-link-exact-active):not(#logo) {
+	background-color: #141418;
+}
