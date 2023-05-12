@@ -236,11 +236,6 @@
 		</div>
 
 		<div class="pb-40"></div>
-
-		<!-- 		<audio
-		src="../../public/playlist/Still D.R.E. (Dj Dark & Mentol Remix).mp3"
-		controls
-	></audio> -->
 	</div>
 </template>
 

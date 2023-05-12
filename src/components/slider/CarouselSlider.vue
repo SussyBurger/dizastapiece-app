@@ -90,5 +90,3 @@
 		</Carousel>
 	</div>
 </template>
-
-<style></style>

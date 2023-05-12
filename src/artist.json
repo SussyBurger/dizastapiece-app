@@ -26,7 +26,7 @@
 			"id": 4,
 			"name": "Day of Dead",
 			"path": "/songs/Day of Dead.mp3",
-			"lyrics": false
+			"lyrics": true
 		},
 		{
 			"id": 5,

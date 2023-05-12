@@ -1,4 +1,6 @@
 <script setup>
+	import TrackRow from '../components/TrackRow.vue';
+
 	import Play from 'vue-material-design-icons/Play.vue';
 	import Pause from 'vue-material-design-icons/Pause.vue';
 	import Share from 'vue-material-design-icons/Share.vue';
@@ -24,10 +26,8 @@
 </script>
 
 <template>
-	<div id="" class="max-w-[1500px] mx-auto">
-		<div
-			class="flex items-center w-full relative h-full px-8 mt-6 min-w-[650px]"
-		>
+	<div id="HeaderSection" class="max-w-[1500px] mx-auto">
+		<div class="flex items-center relative h-full px-8 mt-6 min-w-[650px]">
 			<img width="175" class="rounded-full" :src="artist.avatar" />
 
 			<div class="ml-8">
@@ -141,11 +141,33 @@
 				<Magnify class="text-[#9B9BA1] px-1" />
 				<input
 					type="text"
-					class="w-full py-[5px] placeholder-[#cccccc] dark:placeholder-[#4d4d4d] bg-transparent outline-none ring-0 hover:ring-0 text-sm"
+					class="w-full py-[5px] placeholder-[#ccc] dark:placeholder-[#4d4d4d] bg-transparent outline-none ring-0 hover:ring-0 text-sm"
 					placeholder="Search within tracklist"
 				/>
 			</div>
 		</div>
+
+		<div class="mb-4"></div>
+
+		<div
+			class="flex items-center justify-between min-w-[590px] mx-8 border-b border-b-[#cecaca] dark:border-b-[#302d2d] px-1.5 py-2.5"
+		>
+			<div class="text-xs font-light text-[#aeaeae] dark:text-[#4d4d4d]">
+				TRACK
+			</div>
+			<ClockTimeFiveOutline
+				class="text-[#aeaeae] dark:text-[#4d4d4d]"
+				:size="20"
+			/>
+		</div>
+
+		<ul
+			class="w-full mx-8 pr-16 min-w-[650px]"
+			v-for="track in artist.tracks"
+			:key="track"
+		>
+			<TrackRow v-if="track" :track="track" />
+		</ul>
 	</div>
 </template>
 

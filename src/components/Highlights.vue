@@ -42,5 +42,3 @@
 		</div>
 	</RouterLink>
 </template>
-
-<style></style>

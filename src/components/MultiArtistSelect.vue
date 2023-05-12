@@ -75,5 +75,3 @@
 		</RouterLink>
 	</div>
 </template>
-
-<style></style>
