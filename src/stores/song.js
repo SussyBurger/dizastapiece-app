@@ -3,12 +3,12 @@ import artist from '../artist.json';
 
 export const useSongStore = defineStore('song', {
 	state: () => ({
-		audio: null,
 		isPlaying: false,
+		audio: null,
 		currentArtist: null,
 		currentTrack: null,
 		trackTime: null,
-		currentVolume: 80,
+		currentVolume: 50,
 		hasLyrics: false,
 		lyricsPosition: '0:00',
 	}),

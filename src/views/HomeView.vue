@@ -5,8 +5,8 @@
 </script>
 
 <template>
-	<div class="max-w-[1500px] mx-auto">
-		<div class="px-8 mt-8 min-w-[800px] w-full">
+	<div class="max-md:w-screen lg:max-w-[1500px] min-w-[480px] mx-auto">
+		<div class="px-8 mt-8 lg:min-w-[800px] w-full">
 			<!-- 1st Section -->
 			<div class="dark:text-white text-xl font-semibold inline-block">
 				Mixes inspired by
@@ -18,34 +18,34 @@
 
 			<div class="py-3"></div>
 
-			<div class="flex justify-between w-full gap-8">
-				<div class="xl:w-1/3 w-1/2 dark:text-white">
+			<div class="flex justify-center md:justify-between w-full gap-8">
+				<div class="w-2/3 md:w-1/2 lg:w-1/3 dark:text-white">
 					<MixesInspiredBy
 						class="pb-1.5"
 						text="Track Name #1"
 						by="Artist no.1"
 						to="/categories"
-						image="/images/album-cover.png"
+						image="/images/album-cover.jpg"
 					/>
-					<MixesInspiredBy
-						class="pb-1.5"
-						text="Track Name #4"
-						by="Artist no.1"
-						to="/categories"
-						image="/images/album-cover.png"
-					/>
-					<MixesInspiredBy
-						class="pb-1.5"
-						text="Track Name #7"
-						by="Artist no.1"
-						to="/categories"
-						image="/images/album-cover.png"
-					/>
-				</div>
-				<div class="xl:block hidden xl:w-1/3 sm:w-1/2 md:block dark:text-white">
 					<MixesInspiredBy
 						class="pb-1.5"
 						text="Track Name #2"
+						by="Artist no.1"
+						to="/categories"
+						image="/images/album-cover.jpg"
+					/>
+					<MixesInspiredBy
+						class="pb-1.5"
+						text="Track Name #3"
+						by="Artist no.1"
+						to="/categories"
+						image="/images/album-cover.jpg"
+					/>
+				</div>
+				<div class="hidden md:block sm:w-1/2 lg:w-1/3 dark:text-white">
+					<MixesInspiredBy
+						class="pb-1.5"
+						text="Track Name #4"
 						by="Artist no.1"
 						to="/categories"
 						image="/images/album-cover.png"
@@ -59,23 +59,23 @@
 					/>
 					<MixesInspiredBy
 						class="pb-1.5"
-						text="Track Name #8"
+						text="Track Name #6"
 						by="Artist no.1"
 						to="/categories"
 						image="/images/album-cover.png"
 					/>
 				</div>
-				<div class="xl:block hidden xl:w-1/3 sm:w-1/2 dark:text-white">
+				<div class="hidden lg:block lg:w-1/3 dark:text-white">
 					<MixesInspiredBy
 						class="pb-1.5"
-						text="Track Name #3"
+						text="Track Name #7"
 						by="Artist no.1"
 						to="/categories"
 						image="/images/album-cover.png"
 					/>
 					<MixesInspiredBy
 						class="pb-1.5"
-						text="Track Name #6"
+						text="Track Name #8"
 						by="Artist no.1"
 						to="/categories"
 						image="/images/album-cover.png"
@@ -92,7 +92,7 @@
 		</div>
 
 		<!-- 2nd Section -->
-		<div class="px-8 mt-8 min-w-[800px] w-full">
+		<div class="px-8 mt-8 w-screen lg:min-w-[800px] lg:w-full">
 			<div class="dark:text-white text-xl font-semibold inline-block">
 				Multiple artist selection
 			</div>
@@ -102,9 +102,9 @@
 
 			<div class="py-3"></div>
 
-			<div class="flex justify-start gap-7">
+			<div class="grid grid-cols-2 md:flex md:justify-start gap-7">
 				<MultiArtistSelect
-					class="w-1/4"
+					class="w-full lg:w-1/4"
 					category="New"
 					text="Featuring song-name-no.1, song-name-no.2, song-name-no.3, song-name-no.4 "
 					to="/categories"
@@ -116,7 +116,7 @@
 					}"
 				/>
 				<MultiArtistSelect
-					class="w-1/4"
+					class="w-full lg:w-1/4"
 					category="New"
 					text="Featuring song-name-no.1, song-name-no.2, song-name-no.3, song-name-no.4 "
 					to="/categories"
@@ -128,7 +128,7 @@
 					}"
 				/>
 				<MultiArtistSelect
-					class="w-1/4"
+					class="w-full lg:w-1/4"
 					category="New"
 					text="Featuring song-name-no.1, song-name-no.2, song-name-no.3, song-name-no.4 "
 					to="/categories"
@@ -140,7 +140,7 @@
 					}"
 				/>
 				<MultiArtistSelect
-					class="w-1/4"
+					class="w-full lg:w-1/4"
 					category="New"
 					text="Featuring song-name-no.1, song-name-no.2, song-name-no.3, song-name-no.4 "
 					to="/categories"
@@ -155,7 +155,7 @@
 		</div>
 
 		<!-- 3rd Section -->
-		<div class="mt-8 min-w-[800px]">
+		<div class="mt-8 max-md:w-screen lg:min-w-[800px]">
 			<CarouselSlider
 				category="Most-streamed song"
 				:data="[

@@ -41,13 +41,13 @@
 								? 'transition ease-in duration-100 bg-opacity-100'
 								: 'transition ease-out duration-100 bg-opacity-0 opacity-0'
 						"
-						class="absolute z-20 p-1.5 rounded-full bg-white hover:bg-[#bfbfbf] ease-out duration-300 left-[6px]"
+						class="absolute z-20 p-1.5 rounded-full bg-white hover:bg-[#999] hover:bg-opacity-20 ease-out duration-200 left-[6px]"
 					>
 						<Play :size="30" class="text-black" />
 					</div>
 					<img :src="image" class="min-h-[54px] min-w-[54px] rounded-sm z-0" />
 				</div>
-				<div class="truncate w-full ml-4">
+				<div class="w-full ml-4 truncate">
 					<p
 						class="hover:underline truncate max-w-[95%] text-black dark:text-gray-200 font-light text-[15px] cursor-pointer"
 					>
@@ -56,7 +56,7 @@
 					<p
 						class="text-[#666A6F] dark:text-[#787882] truncate text-[12px] max-w-[95%] font-light"
 					>
-						by <span class="hover:underline cursor-pointer">{{ by }}</span>
+						by <span class="cursor-pointer hover:underline">{{ by }}</span>
 					</p>
 				</div>
 			</div>

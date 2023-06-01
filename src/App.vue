@@ -1,12 +1,12 @@
 <script setup>
+	import { ref, onMounted, onBeforeMount } from 'vue';
 	import { RouterLink, RouterView } from 'vue-router';
 
-	import { ref, onMounted } from 'vue';
-	import { initFlowbite } from 'flowbite';
+	import MusicPlayer from './components/MusicPlayer.vue';
 
 	import Magnify from 'vue-material-design-icons/Magnify.vue';
-
 	import BellOutline from 'vue-material-design-icons/BellOutline.vue';
+	import Login from 'vue-material-design-icons/Login.vue';
 	import Logout from 'vue-material-design-icons/Logout.vue';
 	import MenuDown from 'vue-material-design-icons/MenuDown.vue';
 	import OpenInNew from 'vue-material-design-icons/OpenInNew.vue';
@@ -18,6 +18,9 @@
 	import PlaylistMusic from 'vue-material-design-icons/PlaylistMusic.vue';
 	import ThemeLightDark from 'vue-material-design-icons/ThemeLightDark.vue';
 
+	import { useSongStore } from './stores/song';
+	import { storeToRefs } from 'pinia';
+
 	import { useDark, useToggle } from '@vueuse/core';
 	const isDark = useDark();
 	const toggleDark = useToggle(isDark);
@@ -28,18 +31,25 @@
 	};
 
 	const is_opened = ref(false);
-	const openProfile = () => {
+	const showProfile = () => {
 		is_opened.value = !is_opened.value;
 	};
+	const hideProfile = () => {
+		is_opened.value = false;
+	};
 
-	onMounted(() => {
-		initFlowbite();
+	const useSong = useSongStore();
+	const { isPlaying, currentTrack, trackTime, hasLyrics } =
+		storeToRefs(useSong);
+
+	onBeforeMount(() => {
+		isPlaying.value = false;
+		hasLyrics.value = false;
+		trackTime.value = '0:00';
 	});
 </script>
 
 <script>
-	import { RouterLink } from 'vue-router';
-
 	export default {
 		async mounted() {
 			if (
@@ -108,7 +118,7 @@
 					},
 				})
 					.then(handleErrors)
-					.then((response) => response.json())
+					.then((res) => res.json())
 					.then((data) => {
 						this.user.name = data.display_name;
 						this.user.url = data.images.length > 0 ? data.images[0].url : null;
@@ -128,25 +138,9 @@
 						if (data) {
 							if (data.items.length > 0) {
 								return data.items;
-								console.log(this.playlists, 'playlist');
 							}
 						}
 					});
-
-				fetch('https://api.spotify.com/v1/me/top/artists?limit=15', {
-					method: 'get',
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: 'Bearer ' + this.authCode.accessToken,
-					},
-				})
-					.then((response) => response.json())
-					.then((data) => {
-						if (data.items.length > 0) {
-							this.artists = data.items;
-						}
-					});
-				console.log(this.playlists);
 			},
 			logout: function () {
 				localStorage.removeItem('authCode');
@@ -163,110 +157,115 @@
 	>
 		<div
 			id="Header"
-			class="fixed flex items-center justify-between h-14 w-screen bg-[#f2f2f2] text-[#e3e3e8] border-b border-b-[#e0e0e0] dark:bg-[#191922] dark:text-[#e3e3e8] dark:border-b-[#32323d] z-50"
+			class="fixed flex items-center justify-evenly lg:flex-initial h-14 w-full lg:w-screen bg-[#f2f2f2] text-[#303030] border-b border-b-[#e0e0e0] dark:bg-[#191922] dark:text-[#e3e3e8] dark:border-b-[#32323d] z-50"
 		>
-			<div id="logo" class="mx-6 cursor-pointer">
-				<RouterLink to="/">
-					<div
-						class="bg-logo-light dark:bg-logo-dark bg-contain h-[54px] w-48 bg-center bg-no-repeat ease-out duration-300"
-					></div>
-				</RouterLink>
+			<div class="flex flex-row-reverse w-2/3 lg:flex-row lg:w-full">
+				<div id="logo" class="mx-6 cursor-pointer">
+					<RouterLink to="/">
+						<div
+							class="bg-logo-light dark:bg-logo-dark bg-contain h-[54px] w-48 bg-center bg-no-repeat ease-out duration-300"
+						></div>
+					</RouterLink>
+				</div>
+
+				<div class="flex items-center w-full">
+					<Magnify
+						class="mt-1 pl-10 lg:pr-2 text-[#7E7E88] dark:text-[#7E7E88]"
+						:size="22"
+					/>
+					<input
+						class="w-full hidden lg:block p-1 bg-transparent font-[300] outline-none border-b border-[#ccc] dark:border-[#32323D] placeholder-[#4d4d4d] max-w-[calc(100%-80px)] ease-out duration-300"
+						placeholder="Search"
+						type="text"
+					/>
+				</div>
 			</div>
 
-			<div class="flex items-center justify-center w-full">
-				<Magnify
-					class="mt-1 pl-8 pr-2 text-[#7E7E88] dark:text-[#7E7E88]"
-					:size="22"
-				/>
-				<input
-					class="p-1 bg-transparent font-[300] outline-none border-b border-[#ccc] dark:border-[#32323D] text-[#eee] placeholder-[#4d4d4d] w-full max-w-xl ease-out duration-300"
-					placeholder="Search"
-					type="text"
-				/>
-			</div>
-
-			<div>
+			<div id="user" class="flex justify-end w-1/3 lg:w-1/3">
 				<div v-if="user.url !== null" class="flex items-center">
 					<div class="flex items-center pr-4">
 						<div
-							class="mr-2 p-3 hover:bg-[#e6e6e6] dark:hover:bg-[#2f2f39] rounded-full cursor-pointer ease-out duration-200"
+							class="hidden lg:block mr-2 p-3 hover:bg-[#e6e6e6] dark:hover:bg-[#2f2f39] rounded-full cursor-pointer ease-out duration-200"
 						>
-							<BellOutline class="text-[#334155] dark:text-white" :size="20" />
-						</div>
-					</div>
-
-					<button
-						id="dropdownDividerButton"
-						data-dropdown-toggle="dropdownDivider"
-						class="truncate w-full p-3 mr-8 flex text-black dark:text-white hover:text-[#ef5465] rounded-full bg-[#e6e6e6] hover:bg-[#ccc] dark:bg-[#23232d] dark:hover:bg-[#2f2f39] border-none font-medium text-sm px-4 py-2.5 text-center items-center ease-out duration-200"
-						type="button"
-						@click="openProfile"
-					>
-						<span class="text-md font-semibold">{{ user.name }}</span>
-						<img :src="user.url" class="rounded-full w-8 ml-2" />
-
-						<div class="flex relative pr-6 ease-out duration-200">
-							<MenuDown
-								class="ease-out duration-200"
-								:class="`${
-									is_opened
-										? 'rotate-180 hover:-translate-y-0.5'
-										: 'hover:translate-y-0.5'
-								}`"
+							<BellOutline
+								class="text-[#334155] dark:text-[#f3f3f3]"
 								:size="20"
 							/>
 						</div>
-					</button>
+					</div>
 
-					<!-- Dropdown menu -->
-					<div
-						id="dropdownDivider"
-						class="z-10 hidden bg-[#f2f2f2] border border-[#e2e2e2] dark:border-[#32323d] divide-y divide-[#e2e2e2] rounded-2xl w-40 dark:bg-[#191922] dark:divide-[#32323d]"
-					>
-						<ul
-							class="text-sm text-[#262626] dark:text-white"
-							aria-labelledby="dropdownDividerButton"
+					<div class="items-center justify-center z-100">
+						<!-- Profile Button -->
+						<button
+							class="truncate lg:w-48 flex text-[#444] dark:text-[#f3f3f3] justify-center items-center text-center text-sm p-3 mr-8 gap-2 font-medium hover:text-[#ef5465] dark:hover:text-[#ef5465] rounded-full bg-[#e6e6e6] dark:bg-[#23232d] border-none ease-out duration-200"
+							@click="showProfile"
 						>
-							<li
-								class="py-1 rounded-t-2xl hover:bg-[#e6e6e6] dark:hover:bg-[#22222a] hover:text-[#ef5465] ease-out duration-200"
+							<span class="hidden flex-1 lg:block text-md px-1.5 font-semibold">
+								{{ user.name }}
+							</span>
+							<img :src="user.url" class="flex-none w-8 rounded-full" />
+							<div
+								class="flex relative border-l-[2px] border-[#b3b3b3] dark:border-[#32323d] ml-1.5"
 							>
-								<a
-									href="#"
-									class="truncate flex items-center px-4 py-2 border-none border-t"
-									>Profile
-									<OpenInNew class="pl-16" :size="20" />
-								</a>
-							</li>
-							<li
-								class="py-1 hover:bg-[#e6e6e6] dark:hover:bg-[#22222a] hover:text-[#ef5465] ease-out duration-200"
-							>
-								<a href="#" class="block px-4 py-1.5">Inbox</a>
-							</li>
-						</ul>
+								<MenuDown
+									class="ease-out duration-200 ml-1.5"
+									:class="`${is_opened ? '-rotate-180 ' : ''}`"
+									:size="20"
+								/>
+							</div>
+						</button>
+
+						<!-- Dropdown menu -->
 						<div
-							class="py-1 hover:bg-[#e6e6e6] rounded-b-2xl dark:hover:bg-[#22222a] text-[#262626] dark:text-white hover:text-[#ef5465] ease-out duration-200"
+							v-if="is_opened"
+							class="absolute max-w-[176px] bg-[#f2f2f2] dark:bg-[#191922] border border-[#e2e2e2] dark:border-[#32323d] mt-2 -ml-10 lg:ml-3 rounded-2xl z-10 ease-out duration-200"
 						>
-							<a href="#" class="truncate flex items-center px-4 py-2 text-sm">
-								<span>Sign out</span>
-								<Logout @click="logout" class="pl-[52px]" :size="20" />
-							</a>
+							<ul class="w-40 text-sm">
+								<li
+									class="rounded-t-2xl hover:bg-[#e6e6e6] dark:hover:bg-[#22222a] hover:text-[#ef5465] px-4 py-2.5 ease-out duration-200"
+								>
+									<a>
+										<RouterLink
+											to="/profile"
+											class="flex items-center truncate"
+										>
+											<span class="flex-1">My Profile</span>
+											<OpenInNew class="flex-none" :size="20" />
+										</RouterLink>
+									</a>
+								</li>
+								<li
+									class="px-4 py-2.5 cursor-pointer hover:bg-[#e6e6e6] dark:hover:bg-[#22222a] hover:text-[#ef5465] ease-out duration-200"
+								>
+									<a>My Playlist</a>
+								</li>
+								<li
+									class="px-4 py-2.5 cursor-pointer rounded-b-2xl border-t border-[#e2e2e2] dark:border-[#32323d] hover:bg-[#e6e6e6] dark:hover:bg-[#22222a] hover:text-[#ef5465] ease-out duration-200"
+								>
+									<a class="flex items-center truncate">
+										<span class="flex-1">Sign out</span>
+										<Logout @click="logout" class="flex-none" :size="20" />
+									</a>
+								</li>
+							</ul>
 						</div>
 					</div>
 				</div>
 
-				<div v-else class="flex items-center">
-					<RouterLink to="/login">
-						<div class="w-full p-3">
+				<div v-else class="flex items-center lg:mx-auto">
+					<div class="w-full pr-10 lg:p-3">
+						<RouterLink to="/login">
 							<button
 								type="button"
-								class="truncate text-[#191922] dark:text-[#fff] border-2 border-[#ef5465] hover:text-[#da292a] hover:border-[#da292a] font-semibold rounded-full px-8 py-2 text-center text-[15px] ease-out duration-300"
+								class="truncate text-[#191922] dark:text-[#fff] border-2 border-[#ef5465] hover:text-[#da292a] dark:hover:text-[#da292a] hover:border-[#da292a] font-semibold rounded-full py-2 text-center text-[15px] ease-out duration-300"
 							>
-								Log in
+								<span class="hidden px-8 lg:block">Log in</span>
+								<Login :size="20" class="hidden px-2 max-lg:block" />
 							</button>
-						</div>
-					</RouterLink>
+						</RouterLink>
+					</div>
 
-					<div class="w-full mr-8">
+					<div class="hidden w-full lg:block">
 						<button
 							type="button"
 							class="truncate text-[#fff] bg-[#ef5465] hover:bg-[#da292a] font-semibold rounded-full px-8 py-2 text-center text-[15px] ease-out duration-300"
@@ -278,13 +277,13 @@
 			</div>
 		</div>
 
-		<!-- Side Bar -->
+		<!-- Side Nav -->
 		<aside
-			class="fixed flex flex-col top-14 overflow-hidden min-h-screen bg-[#F2F2F2] dark:bg-[#191922] border-r border-r-[#e0e0e0] dark:border-r-[#32323D] ease-out duration-300 max-md:z-[99] max-md:fixed"
-			:class="`${is_expanded ? 'w-60' : 'w-16'}`"
+			class="fixed flex flex-row bottom-0 max-lg:justify-evenly lg:flex-col lg:top-14 lg:overflow-hidden lg:min-h-screen bg-[#F2F2F2] dark:bg-[#191922] lg:border-r border-[#e0e0e0] dark:border-[#32323D] ease-out duration-300 max-md:z-[99] z-50 max-md:fixed"
+			:class="`${is_expanded ? 'w-full lg:w-60 ' : 'w-full lg:w-16'}`"
 		>
 			<div
-				class="truncate ease-out duration-300 flex items-center justify-end bg-[#d9d9d9] dark:bg-[#141418]"
+				class="hidden truncate ease-out duration-300 lg:flex items-center justify-end bg-[#d9d9d9] dark:bg-[#141418]"
 			>
 				<span
 					class="font-semibold text-[20px] px-16 my-4 lowercase opacity-30"
@@ -293,11 +292,11 @@
 					sub-menu
 				</span>
 				<div
-					class="flex px-4 my-4 relative ease-out duration-300"
+					class="relative flex px-4 my-4 duration-300 ease-out"
 					@click="toggleMenu"
 				>
 					<button
-						class="ease-out duration-300"
+						class="duration-300 ease-out"
 						:class="`${
 							is_expanded
 								? '-rotate-180 hover:-translate-x-2'
@@ -309,19 +308,22 @@
 				</div>
 			</div>
 
-			<div class="mt-14"></div>
+			<!-- <div class="mt-14"></div> -->
 
 			<div
-				class="ease-out duration-300 hover:text-[#ef5465] hover:bg-[#e6e6e6] dark:hover:bg-[#2b2b3b]"
+				class="ease-out duration-300 w-full hover:text-[#ef5465] hover:bg-[#e6e6e6] dark:hover:bg-[#2b2b3b]"
 			>
-				<RouterLink to="/" class="flex items-center mx-4 py-3">
+				<RouterLink
+					to="/"
+					class="flex items-center py-3 mx-4 max-lg:justify-center"
+				>
 					<Music :size="28" />
 					<span
 						class="truncate text-[18px]"
 						:class="`${
 							is_expanded
-								? 'pl-4 opacity-1 ease-out duration-300'
-								: 'opacity-0 ease-out duration-300'
+								? 'hidden md:block pl-4 opacity-1 ease-out duration-300'
+								: 'hidden md:block md:pl-4 lg:opacity-0 ease-out duration-300'
 						}`"
 					>
 						Main Page
@@ -330,34 +332,40 @@
 			</div>
 
 			<div
-				class="mx-0 ease-out duration-300 hover:text-[#ef5465] hover:bg-[#e6e6e6] dark:hover:bg-[#2b2b3b]"
+				class="mx-0 w-full ease-out duration-300 hover:text-[#ef5465] hover:bg-[#e6e6e6] dark:hover:bg-[#2b2b3b]"
 			>
-				<RouterLink to="/artist" class="flex items-center mx-4 py-3">
+				<RouterLink
+					to="/toptracks"
+					class="flex items-center py-3 mx-4 truncate max-lg:justify-center"
+				>
 					<AccountMusic :size="28" />
 					<span
 						class="text-[18px]"
 						:class="`${
 							is_expanded
-								? 'pl-4 opacity-1 ease-out duration-300'
-								: 'opacity-0 ease-out duration-300'
+								? 'hidden md:block pl-4 opacity-1 ease-out duration-300'
+								: 'hidden md:block md:pl-4 lg:opacity-0 ease-out duration-300'
 						}`"
 					>
-						Artists
+						Featured Artists
 					</span>
 				</RouterLink>
 			</div>
 
 			<div
-				class="mx-0 ease-out duration-300 hover:text-[#ef5465] hover:bg-[#e6e6e6] dark:hover:bg-[#2b2b3b]"
+				class="mx-0 w-full ease-out duration-300 hover:text-[#ef5465] hover:bg-[#e6e6e6] dark:hover:bg-[#2b2b3b]"
 			>
-				<RouterLink to="/playlist" class="flex items-center mx-4 py-3">
+				<RouterLink
+					to="/playlist"
+					class="flex items-center py-3 mx-4 max-lg:justify-center"
+				>
 					<PlaylistMusic :size="28" />
 					<span
 						class="text-[18px]"
 						:class="`${
 							is_expanded
-								? 'pl-4 opacity-1 ease-out duration-300'
-								: 'opacity-0 ease-out duration-300'
+								? 'hidden md:block pl-4 opacity-1 ease-out duration-300'
+								: 'hidden md:block md:pl-4 lg:opacity-0 ease-out duration-300'
 						}`"
 					>
 						Playlist
@@ -366,16 +374,19 @@
 			</div>
 
 			<div
-				class="mx-0 ease-out duration-300 hover:text-[#ef5465] hover:bg-[#e6e6e6] dark:hover:bg-[#2b2b3b]"
+				class="mx-0 w-full ease-out duration-300 hover:text-[#ef5465] hover:bg-[#e6e6e6] dark:hover:bg-[#2b2b3b]"
 			>
-				<RouterLink to="/categories" class="flex items-center mx-4 py-3">
+				<RouterLink
+					to="/categories"
+					class="flex items-center py-3 mx-4 max-lg:justify-center"
+				>
 					<ViewGridOutline :size="28" />
 					<span
 						class="text-[18px]"
 						:class="`${
 							is_expanded
-								? 'pl-4 opacity-1 ease-out duration-300'
-								: 'opacity-0 ease-out duration-300'
+								? 'hidden md:block pl-4 opacity-1 ease-out duration-300'
+								: 'hidden md:block md:pl-4 lg:opacity-0 ease-out duration-300'
 						}`"
 					>
 						Categories
@@ -383,18 +394,24 @@
 				</RouterLink>
 			</div>
 
-			<div class="mt-48"></div>
+			<div class="hidden lg:block mt-14"></div>
 
 			<div
 				class="mx-0 ease-out duration-300 cursor-pointer hover:bg-[#e6e6e6] hover:text-[#ef5465] dark:hover:bg-[#2b2b3b]"
 				@click="toggleDark()"
 			>
-				<div class="flex items-center bottom-24 mx-4 py-3">
-					<ThemeLightDark :size="28" />
+				<div
+					class="flex items-center py-3 mx-4 max-lg:justify-center bottom-24"
+				>
+					<ThemeLightDark class="-rotate-45" :size="28" />
 
 					<span
 						class="truncate text-[16px] ease-out duration-300"
-						:class="`${is_expanded ? 'pl-4 opacity-1' : ' opacity-0'}`"
+						:class="`${
+							is_expanded
+								? 'pl-4 hidden lg:block opacity-1'
+								: 'hidden lg:block opacity-0'
+						}`"
 					>
 						{{ isDark ? 'Dark Mode' : 'Light Mode' }}
 					</span>
@@ -403,12 +420,17 @@
 		</aside>
 
 		<main
-			class="py-16 ease-out duration-300"
-			:class="`${is_expanded ? 'pl-60' : 'pl-16'}`"
+			class="py-16 ease-out duration-300 w-full min-w-[480px]"
+			:class="`${is_expanded ? 'pl-2 lg:pl-60' : 'pl-2 lg:pl-16'}`"
+			@click="hideProfile"
 		>
-			<RouterView />
+			<RouterView @click="hideProfile" />
 		</main>
 	</div>
+
+	<MusicPlayer v-if="currentTrack" />
+
+	<div class="w-full h-full" @click="hideProfile"></div>
 </template>
 
 <style></style>

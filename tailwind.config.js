@@ -1,11 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	darkMode: 'class',
-	content: [
-		'./index.html',
-		'./src/**/*.{vue,js,ts,jsx,tsx}',
-		'./node_modules/flowbite/**/*.js',
-	],
+	content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
 	theme: {
 		extend: {
 			backgroundImage: (theme) => ({
@@ -13,11 +9,14 @@ module.exports = {
 				'logo-dark': "url('/images/logo-white.png')",
 			}),
 		},
+		fontFamily: {
+			primary: 'MabryPro',
+		},
 	},
 	variants: {
 		extend: {
 			backgroundImage: ['dark'],
 		},
 	},
-	plugins: [require('flowbite/plugin')],
+	plugins: [],
 };

@@ -37,33 +37,33 @@
 </script>
 
 <template>
-	<main class="container mx-auto">
+	<main class="container min-h-screen mx-auto">
 		<div
-			class="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 absolute w-full md:w-1/2"
+			class="absolute w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 md:w-1/2"
 		>
 			<div
-				class="auth mx-auto flex max-w-sm overflow-hidden bg-white rounded-lg shadow-lg lg:max-w-4xl dark:bg-[#191922] dark:text-[#f3f3f3]"
+				class="auth mx-auto flex max-w-sm overflow-hidden bg-[#f2f2f2] rounded-lg shadow-lg lg:max-w-4xl dark:bg-[#191922] dark:text-[#f3f3f3] border border-[#e0e0e0] dark:border-[#32323d]"
 			>
 				<div
-					class="hidden bg-cover lg:block lg:w-1/2"
-					style="
-						background-image: url('https://images.unsplash.com/photo-1606660265514-358ebbadc80d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1575&q=80');
-					"
+					class="hidden bg-cover lg:block lg:w-1/2 lg:p-1/2"
+					style="background-image: url('images/album-cover.jpg')"
 				></div>
 				<div
-					class="w-full px-6 py-8 md:px-8 lg:w-1/2 flex flex-col justify-between"
+					class="flex flex-col justify-between w-full px-6 py-8 md:px-8 lg:w-1/2"
 				>
 					<div>
-						<h2 class="text-2xl font-semibold text-center text-gray-700">
-							Statify
+						<h2
+							class="text-2xl font-semibold text-center text-[#191922] dark:text-[#e6ffff] up font-primary"
+						>
+							dizastapiece
 						</h2>
-						<p class="text-xl text-center text-gray-600">
-							Login With Spotify Account!
+						<p class="text-xl text-center text-gray-600 font-primary">
+							Start listening with a free account
 						</p>
 					</div>
 					<div class="flex flex-col">
 						<button
-							class="flex items-center justify-center mt-4 text-gray-600 transition-colors duration-200 ease-out transform border rounded-lg hover:bg-[#e6e6e6] dark:hover:bg-[#2b2b3b]"
+							class="flex items-center justify-center mt-4 text-gray-600 transition-colors duration-200 ease-out transform border border-[#e0e0e0] dark:border-[#32323d] rounded-lg hover:bg-[#e6e6e6] dark:hover:bg-[#20202c]"
 							@click="testBtn"
 						>
 							<div class="px-4 py-2">
@@ -86,7 +86,7 @@
 								Sign in with Spotify
 							</span>
 						</button>
-						<p class="text-gray-600 text-xs mt-3 text-center">
+						<p class="mt-3 text-xs text-center text-gray-600">
 							We do not save your account credential
 						</p>
 					</div>
@@ -96,8 +96,4 @@
 	</main>
 </template>
 
-<style scoped>
-	main {
-		min-height: 100vh;
-	}
-</style>
+<style></style>

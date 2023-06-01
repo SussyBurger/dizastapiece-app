@@ -41,7 +41,7 @@
 <template>
 	<div class="bg-red-500">Callback test</div>
 	<router-link to="/callback">
-		<button class="bg-blue-500 px-3 py-1 hover:bg-blue-600 rounded">
+		<button class="px-3 py-1 bg-blue-500 rounded hover:bg-blue-600">
 			Home
 		</button>
 	</router-link>

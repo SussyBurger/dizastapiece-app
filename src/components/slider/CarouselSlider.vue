@@ -21,16 +21,16 @@
 
 	const slideTo = (val) => {
 		if (val && currentSlide.value <= 7) {
-			let res = currentSlide.value + 4;
+			let res = currentSlide.value + 2;
 			if (res <= 12) {
-				currentSlide.value += 4;
+				currentSlide.value += 2;
 			} else if (res > 12) {
 				currentSlide.value = 12;
 			}
 		} else if (!val) {
-			let res = currentSlide.value - 4;
+			let res = currentSlide.value - 2;
 			if (res > 0) {
-				currentSlide.value -= 4;
+				currentSlide.value -= 2;
 			} else if (res < 1) {
 				currentSlide.value = 0;
 			}
@@ -42,13 +42,13 @@
 	<div>
 		<div class="flex justify-between pb-5 ml-8 mr-6">
 			<RouterLink
-				to="/artist"
+				to="/toptracks"
 				@mouseenter="isHoverCategory = true"
 				@mouseleave="isHoverCategory = false"
 				:class="
 					isHoverCategory ? 'hover:text-[#ef5465]' : '#000000 dark:#ffffff'
 				"
-				class="flex items-center font-semibold text-xl cursor-pointer"
+				class="flex items-center text-xl font-semibold cursor-pointer"
 			>
 				{{ category }}
 				<ChevronRight

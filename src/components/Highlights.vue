@@ -34,7 +34,7 @@
 				</div>
 			</div>
 
-			<div class="absolute z-50 bottom-3 left-3 rounded-full bg-white p-1.5">
+			<div class="absolute z-45 bottom-3 left-3 rounded-full bg-white p-1.5">
 				<Play :size="27" class="text-black" />
 			</div>
 
