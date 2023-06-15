@@ -10,6 +10,7 @@ import UserView from '../views/UserView.vue';
 import Profile from '../views/profile/Profile.vue';
 import NewsSetting from '../views/profile/NewsSetting.vue';
 import Devices from '../views/profile/Devices.vue';
+import UserPlaylist from '../views/profile/UserPlaylist.vue';
 
 import Bio from '../views/artist/Bio.vue';
 import TopTracks from '../views/artist/TopTracks.vue';
@@ -41,6 +42,11 @@ const router = createRouter({
 					component: SimilarArtists,
 				},
 			],
+		},
+		{
+			path: '/userplaylist',
+			name: 'userplaylist',
+			component: UserPlaylist,
 		},
 		{
 			path: '/playlist',

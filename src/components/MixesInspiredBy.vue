@@ -17,8 +17,11 @@
 </script>
 
 <template>
-	<div>
-		<RouterLink :to="to" class="relative">
+	<main>
+		<RouterLink
+			:to="to"
+			class="relative"
+		>
 			<div
 				class="flex items-center bg-[#DADCE0] dark:bg-[#23232D] rounded-sm h-[54px] relative"
 			>
@@ -43,9 +46,15 @@
 						"
 						class="absolute z-20 p-1.5 rounded-full bg-white hover:bg-[#999] hover:bg-opacity-20 ease-out duration-200 left-[6px]"
 					>
-						<Play :size="30" class="text-black" />
+						<Play
+							:size="30"
+							class="text-black"
+						/>
 					</div>
-					<img :src="image" class="min-h-[54px] min-w-[54px] rounded-sm z-0" />
+					<img
+						:src="image"
+						class="min-h-[54px] min-w-[54px] rounded-sm z-0"
+					/>
 				</div>
 				<div class="w-full ml-4 truncate">
 					<p
@@ -61,5 +70,5 @@
 				</div>
 			</div>
 		</RouterLink>
-	</div>
+	</main>
 </template>

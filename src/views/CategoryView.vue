@@ -3,8 +3,8 @@
 </script>
 
 <template>
-	<div>
-		<div class="px-8 mt-8 w-screen min-w-[480px]">
+	<div class="w-screen max-w-7xl">
+		<div class="px-8 mt-8 w-full min-w-[480px]">
 			<div class="py-3"></div>
 			<p class="font-primary text-center pb-6 dark:text-[#d1d1d6] text-sm">
 				Sample Text
@@ -57,14 +57,14 @@
 		<div class="py-3"></div>
 
 		<div class="flex items-center justify-center w-full gap-8 mx-auto">
-			<div class="w-1/3 py-4 rounded-lg">
+			<div class="w-1/2 py-4 rounded-lg">
 				<Highlights
 					by="Some Artist 1"
 					song="Random Song 1"
 					image="https://picsum.photos/id/274/800/300"
 				/>
 			</div>
-			<div class="w-1/3 py-4 rounded-lg">
+			<div class="w-1/2 py-4 rounded-lg">
 				<Highlights
 					by="Some Artist 2"
 					song="Random Song 2"

@@ -124,23 +124,6 @@
 						this.user.url = data.images.length > 0 ? data.images[0].url : null;
 					})
 					.catch((error) => (this.errors = error));
-
-				return fetch('https://api.spotify.com/v1/me/playlists?limit=4', {
-					method: 'get',
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: 'Bearer ' + this.authCode.accessToken,
-					},
-				})
-					.then((response) => response.json())
-					.then((data) => {
-						console.log(data.items, 'data');
-						if (data) {
-							if (data.items.length > 0) {
-								return data.items;
-							}
-						}
-					});
 			},
 			logout: function () {
 				localStorage.removeItem('authCode');
@@ -160,7 +143,10 @@
 			class="fixed flex items-center justify-evenly lg:flex-initial h-14 w-full lg:w-screen bg-[#f2f2f2] text-[#303030] border-b border-b-[#e0e0e0] dark:bg-[#191922] dark:text-[#e3e3e8] dark:border-b-[#32323d] z-50"
 		>
 			<div class="flex flex-row-reverse w-2/3 lg:flex-row lg:w-full">
-				<div id="logo" class="mx-6 cursor-pointer">
+				<div
+					id="logo"
+					class="mx-6 cursor-pointer"
+				>
 					<RouterLink to="/">
 						<div
 							class="bg-logo-light dark:bg-logo-dark bg-contain h-[54px] w-48 bg-center bg-no-repeat ease-out duration-300"
@@ -181,8 +167,14 @@
 				</div>
 			</div>
 
-			<div id="user" class="flex justify-end w-1/3 lg:w-1/3">
-				<div v-if="user.url !== null" class="flex items-center">
+			<div
+				id="user"
+				class="flex justify-end w-1/3 lg:w-1/3"
+			>
+				<div
+					v-if="user.url !== null"
+					class="flex items-center"
+				>
 					<div class="flex items-center pr-4">
 						<div
 							class="hidden lg:block mr-2 p-3 hover:bg-[#e6e6e6] dark:hover:bg-[#2f2f39] rounded-full cursor-pointer ease-out duration-200"
@@ -203,7 +195,10 @@
 							<span class="hidden flex-1 lg:block text-md px-1.5 font-semibold">
 								{{ user.name }}
 							</span>
-							<img :src="user.url" class="flex-none w-8 rounded-full" />
+							<img
+								:src="user.url"
+								class="flex-none w-8 rounded-full"
+							/>
 							<div
 								class="flex relative border-l-[2px] border-[#b3b3b3] dark:border-[#32323d] ml-1.5"
 							>
@@ -230,21 +225,36 @@
 											class="flex items-center truncate"
 										>
 											<span class="flex-1">My Profile</span>
-											<OpenInNew class="flex-none" :size="20" />
+											<OpenInNew
+												class="flex-none"
+												:size="20"
+											/>
 										</RouterLink>
 									</a>
 								</li>
 								<li
 									class="px-4 py-2.5 cursor-pointer hover:bg-[#e6e6e6] dark:hover:bg-[#22222a] hover:text-[#ef5465] ease-out duration-200"
 								>
-									<a>My Playlist</a>
+									<a>
+										<RouterLink
+											to="/userplaylist"
+											class="flex items-center w-full truncate"
+										>
+											<span class="flex-1">My Playlist</span>
+											<span class="flex-none"></span>
+										</RouterLink>
+									</a>
 								</li>
 								<li
 									class="px-4 py-2.5 cursor-pointer rounded-b-2xl border-t border-[#e2e2e2] dark:border-[#32323d] hover:bg-[#e6e6e6] dark:hover:bg-[#22222a] hover:text-[#ef5465] ease-out duration-200"
 								>
 									<a class="flex items-center truncate">
 										<span class="flex-1">Sign out</span>
-										<Logout @click="logout" class="flex-none" :size="20" />
+										<Logout
+											@click="logout"
+											class="flex-none"
+											:size="20"
+										/>
 									</a>
 								</li>
 							</ul>
@@ -252,7 +262,10 @@
 					</div>
 				</div>
 
-				<div v-else class="flex items-center lg:mx-auto">
+				<div
+					v-else
+					class="flex items-center lg:mx-auto"
+				>
 					<div class="w-full pr-10 lg:p-3">
 						<RouterLink to="/login">
 							<button
@@ -260,7 +273,10 @@
 								class="truncate text-[#191922] dark:text-[#fff] border-2 border-[#ef5465] hover:text-[#da292a] dark:hover:text-[#da292a] hover:border-[#da292a] font-semibold rounded-full py-2 text-center text-[15px] ease-out duration-300"
 							>
 								<span class="hidden px-8 lg:block">Log in</span>
-								<Login :size="20" class="hidden px-2 max-lg:block" />
+								<Login
+									:size="20"
+									class="hidden px-2 max-lg:block"
+								/>
 							</button>
 						</RouterLink>
 					</div>
@@ -279,11 +295,11 @@
 
 		<!-- Side Nav -->
 		<aside
-			class="fixed flex flex-row bottom-0 max-lg:justify-evenly lg:flex-col lg:top-14 lg:overflow-hidden lg:min-h-screen bg-[#F2F2F2] dark:bg-[#191922] lg:border-r border-[#e0e0e0] dark:border-[#32323D] ease-out duration-300 max-md:z-[99] z-50 max-md:fixed"
-			:class="`${is_expanded ? 'w-full lg:w-60 ' : 'w-full lg:w-16'}`"
+			class="fixed flex flex-col top-14 overflow-hidden min-h-screen bg-[#F2F2F2] dark:bg-[#191922] border-r border-[#e0e0e0] dark:border-[#32323D] ease-out duration-300 z-50"
+			:class="`${is_expanded ? 'w-60 ' : 'w-16'}`"
 		>
 			<div
-				class="hidden truncate ease-out duration-300 lg:flex items-center justify-end bg-[#d9d9d9] dark:bg-[#141418]"
+				class="truncate ease-out duration-300 flex items-center justify-end bg-[#d9d9d9] dark:bg-[#141418]"
 			>
 				<span
 					class="font-semibold text-[20px] px-16 my-4 lowercase opacity-30"
@@ -303,7 +319,10 @@
 								: 'hover:translate-x-2'
 						}`"
 					>
-						<ChevronDoubleRight class="hover:text-[#ef5465]" :size="32" />
+						<ChevronDoubleRight
+							class="hover:text-[#ef5465]"
+							:size="32"
+						/>
 					</button>
 				</div>
 			</div>
@@ -315,15 +334,15 @@
 			>
 				<RouterLink
 					to="/"
-					class="flex items-center py-3 mx-4 max-lg:justify-center"
+					class="flex items-center py-3 mx-4"
 				>
 					<Music :size="28" />
 					<span
 						class="truncate text-[18px]"
 						:class="`${
 							is_expanded
-								? 'hidden md:block pl-4 opacity-1 ease-out duration-300'
-								: 'hidden md:block md:pl-4 lg:opacity-0 ease-out duration-300'
+								? ' pl-4 opacity-1 ease-out duration-300'
+								: ' opacity-0 ease-out duration-300'
 						}`"
 					>
 						Main Page
@@ -336,15 +355,15 @@
 			>
 				<RouterLink
 					to="/toptracks"
-					class="flex items-center py-3 mx-4 truncate max-lg:justify-center"
+					class="flex items-center py-3 mx-4 truncate"
 				>
 					<AccountMusic :size="28" />
 					<span
 						class="text-[18px]"
 						:class="`${
 							is_expanded
-								? 'hidden md:block pl-4 opacity-1 ease-out duration-300'
-								: 'hidden md:block md:pl-4 lg:opacity-0 ease-out duration-300'
+								? 'pl-4 opacity-1 ease-out duration-300'
+								: 'opacity-0 ease-out duration-300'
 						}`"
 					>
 						Featured Artists
@@ -357,15 +376,15 @@
 			>
 				<RouterLink
 					to="/playlist"
-					class="flex items-center py-3 mx-4 max-lg:justify-center"
+					class="flex items-center py-3 mx-4"
 				>
 					<PlaylistMusic :size="28" />
 					<span
 						class="text-[18px]"
 						:class="`${
 							is_expanded
-								? 'hidden md:block pl-4 opacity-1 ease-out duration-300'
-								: 'hidden md:block md:pl-4 lg:opacity-0 ease-out duration-300'
+								? 'pl-4 opacity-1 ease-out duration-300'
+								: 'opacity-0 ease-out duration-300'
 						}`"
 					>
 						Playlist
@@ -378,15 +397,15 @@
 			>
 				<RouterLink
 					to="/categories"
-					class="flex items-center py-3 mx-4 max-lg:justify-center"
+					class="flex items-center py-3 mx-4"
 				>
 					<ViewGridOutline :size="28" />
 					<span
 						class="text-[18px]"
 						:class="`${
 							is_expanded
-								? 'hidden md:block pl-4 opacity-1 ease-out duration-300'
-								: 'hidden md:block md:pl-4 lg:opacity-0 ease-out duration-300'
+								? 'pl-4 opacity-1 ease-out duration-300'
+								: 'opacity-0 ease-out duration-300'
 						}`"
 					>
 						Categories
@@ -394,24 +413,18 @@
 				</RouterLink>
 			</div>
 
-			<div class="hidden lg:block mt-14"></div>
+			<div class="mt-14"></div>
 
 			<div
 				class="mx-0 ease-out duration-300 cursor-pointer hover:bg-[#e6e6e6] hover:text-[#ef5465] dark:hover:bg-[#2b2b3b]"
 				@click="toggleDark()"
 			>
-				<div
-					class="flex items-center py-3 mx-4 max-lg:justify-center bottom-24"
-				>
-					<ThemeLightDark class="-rotate-45" :size="28" />
+				<div class="flex items-center py-3 mx-4 bottom-24">
+					<ThemeLightDark :size="28" />
 
 					<span
 						class="truncate text-[16px] ease-out duration-300"
-						:class="`${
-							is_expanded
-								? 'pl-4 hidden lg:block opacity-1'
-								: 'hidden lg:block opacity-0'
-						}`"
+						:class="`${is_expanded ? 'pl-4 opacity-1' : 'opacity-0'}`"
 					>
 						{{ isDark ? 'Dark Mode' : 'Light Mode' }}
 					</span>
@@ -430,7 +443,10 @@
 
 	<MusicPlayer v-if="currentTrack" />
 
-	<div class="w-full h-full" @click="hideProfile"></div>
+	<div
+		class="w-full h-full"
+		@click="hideProfile"
+	></div>
 </template>
 
 <style></style>

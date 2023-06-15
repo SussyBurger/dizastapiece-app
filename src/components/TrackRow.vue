@@ -73,7 +73,7 @@
 				</div>
 
 				<div
-					v-if="
+					v-else-if="
 						track &&
 						currentTrack &&
 						currentTrack.name &&
@@ -100,7 +100,7 @@
 					"
 					class="p-1 mt-[3px] ml-0.5 absolute rounded-full bg-white cursor-pointer"
 				>
-					<img v-if="!isHoverGif" src="/images/audio-wave.gif" />
+					<img v-if="!isHoverGif" src="/images/audio-wave.gif" :sizes="25" />
 					<Pause
 						v-if="isHoverGif"
 						class="text-black"
@@ -123,7 +123,7 @@
 						? 'text-[#ef5464]'
 						: 'text-[#333] dark:text-[#d4d4d4]'
 				"
-				class="text-sm pl-4 hover:underline cursor-pointer"
+				class="pl-4 text-sm cursor-pointer hover:underline"
 			>
 				{{ track.id }}. {{ track.name }}
 			</div>

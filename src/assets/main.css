@@ -21,11 +21,6 @@ aside div:has(> .router-link-exact-active):not(#logo) {
 	color: #ca2a36;
 	background-color: #ccc;
 	border-left: 5px solid #ca2a36;
-
-	@media not all and (min-width: 1024px) {
-		border-top: 3px solid #ca2a36;
-		border-left: none;
-	}
 }
 
 .dark aside div:has(> .router-link-exact-active):not(#logo) {
