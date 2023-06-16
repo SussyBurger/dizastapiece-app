@@ -36,7 +36,7 @@
 								? 'transition ease-in duration-100 bg-opacity-40 dark:bg-opacity-40'
 								: 'transition ease-out duration-100 bg-opacity-5 dark:bg-opacity-5'
 						"
-						class="absolute h-full z-10 w-[54px] bg-[#cccccc] dark:bg-black rounded-sm"
+						class="absolute h-full z-10 w-[54px] bg-[#ccc] dark:bg-black rounded-sm"
 					></div>
 					<div
 						:class="

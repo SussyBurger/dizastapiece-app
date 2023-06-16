@@ -27,29 +27,31 @@
 					<div class="flex flex-1 hover:bg-[#979797] hover:bg-opacity-20">
 						<div
 							class="flex items-center w-16 h-16 gap-2"
-							@mouseenter="isHover = true"
-							@mouseleave="isHover = false"
+							@mouseenter="hoveredTrackId = track.id"
+							@mouseleave="hoveredTrackId = null"
 						>
 							<div
-								:class="
-									isHover
-										? 'transition ease-in duration-100 bg-opacity-40 dark:bg-opacity-40'
-										: 'transition ease-out duration-100 bg-opacity-5 dark:bg-opacity-5'
-								"
-								class="absolute z-10 w-16 bg-[#ccc] dark:bg-black rounded-sm"
+								:class="{
+									'transition ease-in duration-200 bg-opacity-40 dark:bg-opacity-40':
+										hoveredTrackId === track.id,
+									'transition ease-out duration-200 bg-opacity-5 dark:bg-opacity-5':
+										hoveredTrackId !== track.id,
+								}"
+								class="absolute h-14 z-10 w-14 m-1 bg-[#ccc] dark:bg-black rounded-sm"
 							></div>
 							<div
-								:class="
-									isHover
-										? 'transition ease-in duration-100 bg-opacity-100'
-										: 'transition ease-out duration-100 bg-opacity-0 opacity-0'
-								"
-								class="absolute left-2 z-20 p-2 rounded-full bg-white hover:bg-[#999] hover:bg-opacity-20 cursor-pointer ease-out duration-200"
+								:class="{
+									'transition ease-in duration-200 bg-opacity-100':
+										hoveredTrackId === track.id,
+									'transition ease-out duration-200 opacity-0':
+										hoveredTrackId !== track.id,
+								}"
+								class="absolute left-2 z-20 p-2 rounded-full bg-white hover:bg-[#ef5465] text-black hover:text-white cursor-pointer ease-out duration-200"
 								@click="playTrack(track.preview_url)"
 							>
 								<Play
 									v-if="!isTrackPlaying || selectedTrack !== track.preview_url"
-									class="text-black truncate bg-white rounded-full"
+									class="truncate bg-white rounded-full"
 									:size="32"
 								/>
 								<Pause
@@ -59,7 +61,7 @@
 							</div>
 							<img
 								:src="track.album.images[0].url"
-								class="z-0 m-1 border rounded-sm w-14 h-14"
+								class="z-0 m-1 border border-[#e0e0e0] dark:border-[#32323d] rounded-sm w-14 h-14"
 							/>
 						</div>
 
@@ -74,17 +76,6 @@
 								{{ 'Released on ' + track.album.release_date }}
 							</div>
 						</div>
-
-						<!-- 						<div
-							class="items-center justify-center cursor-pointer text-overflow"
-							@click="playTrack(track.preview_url)"
-						>
-							<Play
-								v-if="!isTrackPlaying || selectedTrack !== track.preview_url"
-								class="text-black truncate bg-white rounded-full"
-							/>
-							<Pause v-else />
-						</div> -->
 					</div>
 				</li>
 			</ul>
@@ -103,17 +94,10 @@
 	import Magnify from 'vue-material-design-icons/Magnify.vue';
 
 	let isHover = ref(false);
-	/* 	import { storeToRefs } from 'pinia';
-
-	const useTrack = usePlayerStore();
-	const { isTrackPlaying, selectedTrack, playbackTime } = storeToRefs(useTrack);
-
-	 */
 </script>
 
 <script>
 	import axios from 'axios';
-
 	import { TOKEN_USER } from '../main.js';
 
 	export default {
@@ -124,6 +108,7 @@
 				isTrackPlaying: false,
 				selectedTrack: null,
 				playbackTime: 0,
+				hoveredTrackId: null,
 			};
 		},
 		setup() {},
