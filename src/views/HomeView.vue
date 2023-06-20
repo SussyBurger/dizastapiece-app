@@ -2,13 +2,14 @@
 	import MixesInspiredBy from '../components/MixesInspiredBy.vue';
 	import MultiArtistSelect from '../components/MultiArtistSelect.vue';
 	import CarouselSlider from '../components/slider/CarouselSlider.vue';
+	import Highlights from '../components/Highlights.vue';
 </script>
 
 <template>
 	<div class="max-md:w-screen lg:max-w-[1500px] min-w-[480px] mx-auto">
 		<div class="px-8 mt-8 lg:min-w-[800px] w-full">
 			<!-- 1st Section -->
-			<div class="dark:text-white text-xl font-semibold inline-block">
+			<div class="inline-block text-xl font-semibold dark:text-white">
 				Mixes inspired by
 			</div>
 
@@ -18,7 +19,7 @@
 
 			<div class="py-3"></div>
 
-			<div class="flex justify-center md:justify-between w-full gap-8">
+			<div class="flex justify-center w-full gap-8 md:justify-between">
 				<div class="w-2/3 md:w-1/2 lg:w-1/3 dark:text-white">
 					<MixesInspiredBy
 						class="pb-1.5"
@@ -93,7 +94,7 @@
 
 		<!-- 2nd Section -->
 		<div class="px-8 mt-8 w-screen lg:min-w-[800px] lg:w-full">
-			<div class="dark:text-white text-xl font-semibold inline-block">
+			<div class="inline-block text-xl font-semibold dark:text-white">
 				Multiple artist selection
 			</div>
 			<div class="text-sm font-light dark:text-[#a2a2ad]">
@@ -233,6 +234,37 @@
 					},
 				]"
 			/>
+		</div>
+
+		<div class="w-full">
+			<div class="px-8 mt-8 w-full min-w-[480px]">
+				<div class="py-3"></div>
+			</div>
+		</div>
+
+		<div class="px-8 mt-8">
+			<div class="inline-block text-xl font-semibold dark:text-white">
+				Hightlights
+			</div>
+
+			<div class="py-3"></div>
+
+			<div class="flex items-center justify-center w-full gap-8 mx-auto">
+				<div class="w-1/2 py-4 rounded-lg">
+					<Highlights
+						by="Some Artist 1"
+						song="Random Song 1"
+						image="https://picsum.photos/id/274/800/300"
+					/>
+				</div>
+				<div class="w-1/2 py-4 rounded-lg">
+					<Highlights
+						by="Some Artist 2"
+						song="Random Song 2"
+						image="https://picsum.photos/id/299/800/300"
+					/>
+				</div>
+			</div>
 		</div>
 
 		<div class="pb-40"></div>

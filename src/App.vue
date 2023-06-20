@@ -1,8 +1,9 @@
 <script setup>
-	import { ref, onMounted, onBeforeMount } from 'vue';
+	import { ref, onBeforeMount } from 'vue';
 	import { RouterLink, RouterView } from 'vue-router';
 
 	import MusicPlayer from './components/MusicPlayer.vue';
+	import PlayerControl from './components/PlayerControl.vue';
 
 	import Magnify from 'vue-material-design-icons/Magnify.vue';
 	import BellOutline from 'vue-material-design-icons/BellOutline.vue';
@@ -295,7 +296,7 @@
 
 		<!-- Side Nav -->
 		<aside
-			class="fixed flex flex-col top-14 overflow-hidden min-h-screen bg-[#F2F2F2] dark:bg-[#191922] border-r border-[#e0e0e0] dark:border-[#32323D] ease-out duration-300 z-50"
+			class="fixed hidden lg:flex flex-col top-14 overflow-hidden min-h-screen bg-[#F2F2F2] dark:bg-[#191922] border-r border-[#e0e0e0] dark:border-[#32323D] ease-out duration-300 z-50"
 			:class="`${is_expanded ? 'w-60 ' : 'w-16'}`"
 		>
 			<div
@@ -441,7 +442,8 @@
 		</main>
 	</div>
 
-	<MusicPlayer v-if="currentTrack" />
+	<!-- <MusicPlayer v-if="currentTrack" /> -->
+	<!-- <PlayerControl /> -->
 
 	<div
 		class="w-full h-full"

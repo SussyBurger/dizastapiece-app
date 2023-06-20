@@ -1,6 +1,4 @@
 <script setup>
-	import { RouterLink, RouterView } from 'vue-router';
-
 	import Play from 'vue-material-design-icons/Play.vue';
 	import Pause from 'vue-material-design-icons/Pause.vue';
 	import Share from 'vue-material-design-icons/Share.vue';
@@ -25,9 +23,16 @@
 </script>
 
 <template>
-	<div id="HeaderSection" class="max-w-[1200x] mx-auto">
+	<div
+		id="HeaderSection"
+		class="max-w-[1200x] mx-auto"
+	>
 		<div class="flex items-center relative h-full px-8 mt-6 min-w-[650px]">
-			<img width="175" class="rounded-full" :src="artist.avatar" />
+			<img
+				width="175"
+				class="rounded-full"
+				:src="artist.avatar"
+			/>
 
 			<div class="ml-8">
 				<div
@@ -52,7 +57,10 @@
 							<Play :size="20" />
 							<div class="pr-1 text-sm font-bold">PLAY</div>
 						</div>
-						<div v-else class="flex items-center px-6 duration-300 ease-out">
+						<div
+							v-else
+							class="flex items-center px-6 duration-300 ease-out"
+						>
 							<Pause :size="20" />
 							<div class="pr-1 text-sm font-bold">PAUSE</div>
 						</div>
@@ -70,7 +78,10 @@
 					<button
 						class="rounded-full p-2 border border-[#52525D] hover:bg-[#999] hover:bg-opacity-20 dark:hover:bg-[#2b2b30] ease-out duration-200"
 					>
-						<Share class="text-[#1a1a1a] dark:text-[#eaeaea]" :size="20" />
+						<Share
+							class="text-[#1a1a1a] dark:text-[#eaeaea]"
+							:size="20"
+						/>
 					</button>
 
 					<button

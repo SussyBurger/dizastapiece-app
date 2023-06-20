@@ -23,7 +23,7 @@
 <template>
 	<div
 		id="SongsSection"
-		class="max-w-[1500px] mx-auto"
+		class="mx-2 max-w-[1400px]"
 	>
 		<div class="pl-8">
 			<div class="mb-7 font-semibold text-3xl text-[#121216] dark:text-white">

@@ -100,7 +100,11 @@
 					"
 					class="p-1 mt-[3px] ml-0.5 absolute rounded-full bg-white cursor-pointer"
 				>
-					<img v-if="!isHoverGif" src="/images/audio-wave.gif" :sizes="25" />
+					<img
+						v-if="!isHoverGif"
+						src="/images/audio-wave.gif"
+						:sizes="25"
+					/>
 					<Pause
 						v-if="isHoverGif"
 						class="text-black"
@@ -135,18 +139,27 @@
 				@click="openLyrics(track, artist)"
 				class="rotate-45 rounded-full p-1.5 mr-3 hover:bg-[#979797] hover:bg-opacity-20 cursor-pointer"
 			>
-				<MicrophoneVariant class="text-[#333] dark:text-[#ccc]" :size="21" />
+				<MicrophoneVariant
+					class="text-[#333] dark:text-[#ccc]"
+					:size="21"
+				/>
 			</div>
 
 			<div
 				class="rounded-full p-1.5 mr-3 hover:bg-[#979797] hover:bg-opacity-20 cursor-pointer"
 			>
-				<HeartOutline class="text-[#333] dark:text-[#ccc]" :size="21" />
+				<HeartOutline
+					class="text-[#333] dark:text-[#ccc]"
+					:size="21"
+				/>
 			</div>
 			<div
 				class="rounded-full p-1.5 mr-3 hover:bg-[#979797] hover:bg-opacity-20 cursor-pointer"
 			>
-				<DotsHorizontal class="text-[#333] dark:text-[#ccc]" :size="21" />
+				<DotsHorizontal
+					class="text-[#333] dark:text-[#ccc]"
+					:size="21"
+				/>
 			</div>
 			<div
 				v-if="isTrackTime"

@@ -134,7 +134,6 @@
 
 <template>
 	<div
-		v-if="audio"
 		id="MusicPlayer"
 		class="fixed flex min-w-[1000px] w-full h-20 border-t border-t-[#e0e0e0] dark:border-t-[#383838] bg-[#f2f2f2] dark:bg-[#23232d] items-center justify-between bottom-0 z-[50]"
 	>
@@ -164,8 +163,14 @@
 						($event) => useSong.playOrPauseThisSong(currentArtist, currentTrack)
 					"
 				>
-					<Play v-if="!isPlaying" :size="45" />
-					<Pause v-else :size="45" />
+					<Play
+						v-if="!isPlaying"
+						:size="45"
+					/>
+					<Pause
+						v-else
+						:size="45"
+					/>
 				</button>
 				<button
 					type="button"
@@ -205,7 +210,10 @@
 					<div
 						class="p-1.5 ml-2 hover:bg-[#a6a6a6] dark:hover:bg-[#5a5a5a] hover:bg-opacity-50 rounded-full cursor-pointer ease-out duration-200"
 					>
-						<Plus class="text-[#747474] dark:text-[#808080]" :size="20" />
+						<Plus
+							class="text-[#747474] dark:text-[#808080]"
+							:size="20"
+						/>
 					</div>
 					<div
 						class="p-1.5 ml-2 hover:bg-[#a6a6a6] dark:hover:bg-[#5a5a5a] hover:bg-opacity-50 rounded-full cursor-pointer ease-out duration-200"
@@ -218,7 +226,10 @@
 					<div
 						class="p-1.5 ml-2 hover:bg-[#5a5a5a] hover:bg-opacity-50 rounded-full cursor-pointer ease-out duration-200"
 					>
-						<Tune class="text-[#747474] dark:text-[#808080]" :size="20" />
+						<Tune
+							class="text-[#747474] dark:text-[#808080]"
+							:size="20"
+						/>
 					</div>
 				</div>
 			</div>
@@ -322,7 +333,10 @@
 				<div
 					class="p-2 ml-2 hover:bg-[#5a5a5a] hover:bg-opacity-50 rounded-full cursor-pointer"
 				>
-					<Tune class="block text-[#444] dark:text-[#f3f3f3]" :size="17" />
+					<Tune
+						class="block text-[#444] dark:text-[#f3f3f3]"
+						:size="17"
+					/>
 				</div>
 			</div>
 			<div

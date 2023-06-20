@@ -1,5 +1,5 @@
 <template>
-	<main class="px-8 mt-8">
+	<main class="w-full px-8 mt-8 max-w-8xl">
 		<div
 			class="flex items-center border border-[#d1d1d6] dark:border-[#32323d] bg-[#F8F8F9] dark:bg-[#23232D] rounded-sm text-[#c9c9c9] w-[300px] ease-out duration-200"
 		>
@@ -22,76 +22,128 @@
 				<li
 					v-for="track in this.tracks.value"
 					class="flex font-primary"
+					@mouseenter="hoveredTrackId = track.id"
+					@mouseleave="hoveredTrackId = null"
 					:key="track.id"
 				>
 					<div class="flex flex-1 hover:bg-[#979797] hover:bg-opacity-20">
-						<div
-							class="flex items-center w-16 h-16 gap-2"
-							@mouseenter="hoveredTrackId = track.id"
-							@mouseleave="hoveredTrackId = null"
-						>
-							<div
-								:class="{
-									'transition ease-in duration-200 bg-opacity-40 dark:bg-opacity-40':
-										hoveredTrackId === track.id,
-									'transition ease-out duration-200 bg-opacity-5 dark:bg-opacity-5':
-										hoveredTrackId !== track.id,
-								}"
-								class="absolute h-14 z-10 w-14 m-1 bg-[#ccc] dark:bg-black rounded-sm"
-							></div>
-							<div
-								:class="{
-									'transition ease-in duration-200 bg-opacity-100':
-										hoveredTrackId === track.id,
-									'transition ease-out duration-200 opacity-0':
-										hoveredTrackId !== track.id,
-								}"
-								class="absolute left-2 z-20 p-2 rounded-full bg-white hover:bg-[#ef5465] text-black hover:text-white cursor-pointer ease-out duration-200"
-								@click="playTrack(track.preview_url)"
-							>
-								<Play
-									v-if="!isTrackPlaying || selectedTrack !== track.preview_url"
-									class="truncate bg-white rounded-full"
-									:size="32"
-								/>
-								<Pause
-									v-else
-									:size="32"
+						<div class="flex flex-1">
+							<div class="flex items-center w-16 h-16 gap-2">
+								<div
+									:class="{
+										'transition ease-in duration-200 bg-opacity-40 dark:bg-opacity-40':
+											hoveredTrackId === track.id && !isTrackPlaying,
+										'transition ease-out duration-200 bg-opacity-5 dark:bg-opacity-5':
+											hoveredTrackId !== track.id || isTrackPlaying,
+										'bg-opacity-100': selectedTrack === track.preview_url,
+									}"
+									class="absolute h-14 z-10 w-14 m-1 bg-[#ccc] dark:bg-black rounded-sm"
+								></div>
+								<div
+									:class="{
+										'transition ease-in duration-200 opacity-100':
+											hoveredTrackId === track.id && !isTrackPlaying,
+										'transition ease-out duration-200 opacity-0':
+											hoveredTrackId !== track.id || isTrackPlaying,
+										'transition ease-in duration-200 bg-opacity-100':
+											selectedTrack === track.preview_url && track.id,
+										'transition ease-out duration-200 opacity-0':
+											selectedTrack !== track.preview_url,
+									}"
+									class="absolute left-2 z-20 p-2 rounded-full bg-white hover:bg-[#ef5465] text-black hover:text-white cursor-pointer ease-out duration-200"
+									@click="playTrack(track.preview_url)"
+								>
+									<Play
+										v-if="
+											!isTrackPlaying || selectedTrack !== track.preview_url
+										"
+										class="truncate rounded-full"
+										:size="32"
+									/>
+									<Pause
+										v-else
+										:size="32"
+									/>
+								</div>
+								<img
+									:src="track.album.images[0].url"
+									class="z-0 m-1 border border-[#e0e0e0] dark:border-[#32323d] rounded-sm w-14 h-14"
 								/>
 							</div>
-							<img
-								:src="track.album.images[0].url"
-								class="z-0 m-1 border border-[#e0e0e0] dark:border-[#32323d] rounded-sm w-14 h-14"
-							/>
+
+							<div class="pl-2">
+								<div
+									class="text-[#1f1f1f] dark:text-[#d9d9d9] ease-out duration-200"
+								>
+									<span
+										:class="{
+											'text-[#ef5465]':
+												selectedTrack === track.preview_url &&
+												track.preview_url !== null,
+										}"
+									>
+										{{ track.name }}
+									</span>
+								</div>
+								<div
+									class="text-[14px] text-[#1f1f1f] dark:text-[#d9d9d9] ease-out duration-200"
+								>
+									<span
+										:class="{
+											'text-[#ef5465]':
+												selectedTrack === track.preview_url &&
+												track.preview_url !== null,
+										}"
+									>
+										{{ track.artists[0].name }}
+									</span>
+								</div>
+								<div class="text-xs text-[#858590] ease-out duration-200">
+									{{ 'Released on ' + track.album.release_date }}
+								</div>
+							</div>
 						</div>
 
-						<div class="pl-2">
-							<div class="text-[#1f1f1f] dark:text-[#d9d9d9]">
-								{{ track.name }}
-							</div>
-							<div class="text-[14px] text-[#1f1f1f] dark:text-[#d9d9d9]">
-								{{ track.artists[0].name }}
-							</div>
-							<div class="text-xs text-[#858590]">
-								{{ 'Released on ' + track.album.release_date }}
-							</div>
+						<div class="flex items-center">
+							<button
+								class="mr-3 rounded-full p-1.5 hover:bg-[#ef5465] hover:text-[#e3e3e8] cursor-pointer ease-out duration-200"
+							>
+								<DotsHorizontal />
+							</button>
+							<button
+								class="mr-3 rounded-full p-1.5 hover:bg-[#ef5465] hover:text-[#e3e3e8] cursor-pointer ease-out duration-200"
+							>
+								<HeartOutline @click="addTrackToPlaylist(track)" />
+							</button>
+							<button
+								class="mr-8 px-3 py-1 text-[#303030] dark:text-[#e3e3e8] transition duration-200 ease-in-out bg-transparent border-2 border-[#666] dark:border-[#9d9daf] hover:border-[#ef5465] dark:hover:border-[#ef5465] rounded-full hover:text-white hover:bg-[#ef5465]"
+								@click="addTrackToPlaylist(track)"
+							>
+								Add to Playlist
+							</button>
 						</div>
 					</div>
 				</li>
 			</ul>
 		</div>
+
 		<audio
 			autoplay
 			id="audio-play"
 		></audio>
+
+		<div class="mb-20"></div>
 	</main>
 </template>
 
 <script setup>
 	import { ref } from 'vue';
 	import Play from 'vue-material-design-icons/Play.vue';
+	import Plus from 'vue-material-design-icons/Plus.vue';
 	import Pause from 'vue-material-design-icons/Pause.vue';
 	import Magnify from 'vue-material-design-icons/Magnify.vue';
+	import HeartOutline from 'vue-material-design-icons/HeartOutline.vue';
+	import DotsHorizontal from 'vue-material-design-icons/DotsHorizontal.vue';
 
 	let isHover = ref(false);
 </script>

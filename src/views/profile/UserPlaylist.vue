@@ -1,4 +1,5 @@
 <script lang="js">
+	import CreatePlaylist from '../../components/CreatePlaylist.vue';
 	export default {
 	  async mounted() {
 	    if (
@@ -84,45 +85,13 @@
 	          }
 	        })
 
-			fetch(' https://api.spotify.com/v1/playlists/{{playlist_id}}/tracks?limit=20', {
-	        method: 'get',
-	        headers: {
-	          'Content-Type': 'application/json',
-	          'Authorization': 'Bearer '+this.authCode.accessToken,
-	        },
-	      })
-	        .then((response) => response.json())
-	        .then((data) => {
-	          console.log(data.items, 'tracks');
-	          if(data){
-	            if(data.items.length>0) {
-	              return playlist.items;
-	              console.log(this.tracks, 'tracks')
-	            }
-	          }
-	        })
-
-
-	      fetch('https://api.spotify.com/v1/me/following', {
-	        method: 'get',
-	        headers: {
-	          'Content-Type': 'application/json',
-	          'Authorization': 'Bearer '+this.authCode.accessToken,
-	        },
-	      })
-	        .then((response) => response.json())
-	        .then((data) => {
-	          if(data.items.length>0){
-	            this.artist = data.items
-	          }
-	        })
-	       console.log(this.artists)
 	    },
 	    logout: function(){
 	      localStorage.removeItem('authCode')
 	      this.$router.replace('/login')
 	    }
 	  },
+	  components: { CreatePlaylist },
 	}
 </script>
 
@@ -130,7 +99,7 @@
 	<main class="min-h-screen">
 		<div
 			v-if="toggle === true"
-			class="container absolute w-full px-2 mx-auto top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 md:w-1/2 lg:w-1/3"
+			class="container w-full px-2 mx-auto md:w-1/2 lg:w-1/3"
 		>
 			<div>
 				<h2
@@ -206,6 +175,10 @@
 			>
 				Playlist not Found
 			</div>
+		</div>
+
+		<div class="w-full px-2 mx-auto">
+			<create-playlist></create-playlist>
 		</div>
 	</main>
 </template>

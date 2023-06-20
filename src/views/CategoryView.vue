@@ -1,76 +1,85 @@
-<script setup>
-	import Highlights from '../components/Highlights.vue';
-</script>
-
 <template>
-	<div class="w-screen max-w-7xl">
-		<div class="px-8 mt-8 w-full min-w-[480px]">
-			<div class="py-3"></div>
-			<p class="font-primary text-center pb-6 dark:text-[#d1d1d6] text-sm">
-				Sample Text
-			</p>
-			<div class="flex justify-center gap-7">
-				<!-- 				<div class="relative flex items-center justify-center">
-					<img
-						src="https://picsum.photos/id/79/300/300"
-						class="absolute z-0 rounded-full cursor-pointer -left-36"
-						width="100"
-					/>
-					<img
-						src="https://picsum.photos/id/79/300/300"
-						class="absolute z-0 rounded-full cursor-pointer -left-20"
-						width="115"
-					/>
-					<img
-						src="https://picsum.photos/id/79/300/300"
-						class="z-0 rounded-full cursor-pointer"
-						width="160"
-					/>
-					<img
-						src="https://picsum.photos/id/79/300/300"
-						class="absolute z-0 rounded-full cursor-pointer -right-20"
-						width="115"
-					/>
-					<img
-						src="https://picsum.photos/id/79/300/300"
-						class="absolute z-0 rounded-full cursor-pointer -right-36"
-						width="100"
-					/>
-				</div> -->
-			</div>
-			<div class="flex justify-center w-full p-3">
-				<button
-					type="button"
-					class="text-white bg-[#ed5465] hover:bg-[#d8384a] font-semibold rounded-full px-8 py-2 text-center text-[15px]"
+	<div class="pl-8">
+		<h1>My Playlists</h1>
+		<ul class="flex flex-col justify-center w-full gap-4 md:justify-between">
+			<li
+				v-for="playlist in playlists"
+				:key="playlist.id"
+			>
+				<img
+					:src="playlist.images[0].url"
+					class="z-0 m-1 border border-[#e0e0e0] dark:border-[#32323d] rounded-sm w-60"
+				/>
+				<h2>{{ playlist.name }}</h2>
+				{{ playlist.tracks.total + ' song' }}
+				<button @click="getTracks(playlist.id)">Show tracks</button>
+				<ul
+					v-if="playlist.tracks"
+					class="ml-4"
 				>
-					Add
-				</button>
-			</div>
-		</div>
-	</div>
-
-	<div class="w-screen px-8 mt-8">
-		<div class="inline-block text-xl font-semibold dark:text-white">
-			Hightlights
-		</div>
-
-		<div class="py-3"></div>
-
-		<div class="flex items-center justify-center w-full gap-8 mx-auto">
-			<div class="w-1/2 py-4 rounded-lg">
-				<Highlights
-					by="Some Artist 1"
-					song="Random Song 1"
-					image="https://picsum.photos/id/274/800/300"
-				/>
-			</div>
-			<div class="w-1/2 py-4 rounded-lg">
-				<Highlights
-					by="Some Artist 2"
-					song="Random Song 2"
-					image="https://picsum.photos/id/299/800/300"
-				/>
-			</div>
-		</div>
+					<li
+						v-for="track in playlist.tracks"
+						class="flex font-primary"
+						:key="track.id"
+					>
+						{{ track.name }}
+					</li>
+				</ul>
+			</li>
+		</ul>
 	</div>
 </template>
+
+<script>
+	import axios from 'axios';
+	import { TOKEN_USER } from '../main.js';
+	export default {
+		data() {
+			return {
+				playlists: [],
+			};
+		},
+		mounted() {
+			this.getPlaylists();
+		},
+		methods: {
+			getPlaylists() {
+				const userId = '316osap42zsktmc3hqsktsf22kk4';
+
+				axios
+					.get(`https://api.spotify.com/v1/users/${userId}/playlists`, {
+						headers: {
+							Authorization: `Bearer ${TOKEN_USER}`,
+						},
+					})
+					.then((response) => {
+						console.log(response.data);
+						this.playlists = response.data.items;
+					})
+					.catch((error) => {
+						console.log(error);
+					});
+			},
+			getTracks(playlistId) {
+				axios
+					.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+						headers: {
+							Authorization: `Bearer ${TOKEN_USER}`,
+						},
+					})
+					.then((response) => {
+						console.log(response.data);
+						const playlistIndex = this.playlists.findIndex(
+							(playlist) => playlist.id === playlistId
+						);
+						this.playlists[playlistIndex].tracks = response.data.items;
+					})
+					.catch((error) => {
+						console.log(error);
+					});
+			},
+		},
+	};
+</script>
+
+<style></style>
