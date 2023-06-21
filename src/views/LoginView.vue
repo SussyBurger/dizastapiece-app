@@ -13,10 +13,11 @@
 	    const clientId = '6c596d9413a74cc2b2d96308d41c3c8b';
 	    const redirect_uri = encodeURI('http://127.0.0.1:5173/callback');
 	    const state = this.generateString(16);
-	    const scope = 'user-read-email+user-read-private+user-top-read';
-
-	    let authUrl = 'https://accounts.spotify.com/authorize?response_type=token&redirect_uri='+redirect_uri+'&client_id='+clientId+'&scope='+scope+'&state='+state
-	    this.authUrl = authUrl.replace(' ', '')
+	    const scope = 'user-read-email playlist-read-private playlist-modify-public user-read-private user-top-read';
+		const endcodeScope = encodeURIComponent(scope)
+	    let authUrl = 'https://accounts.spotify.com/authorize?response_type=token&redirect_uri='+redirect_uri+'&client_id='+clientId+'&state='+state+'&scope=playlist-modify-public'
+	    console.log(authUrl, 'auth')
+		this.authUrl = authUrl.replace(' ', '')
 	  },
 	  methods: {
 	    generateString: function(length) {

@@ -18,10 +18,7 @@
 			</label>
 			<label class="flex">
 				Public:
-				<input
-					type="checkbox"
-					v-model="public"
-				/>
+				<input type="checkbox" />
 			</label>
 			<button
 				type="submit"
@@ -49,15 +46,16 @@
 
 		methods: {
 			createPlaylist() {
+				console.log(TOKEN_USER, 'TOKENUSER');
 				const headers = {
-					Authorization: 'Bearer ' + { TOKEN_USER },
+					Authorization: `Bearer ${TOKEN_USER}`,
 					'Content-Type': 'application/json',
 				};
-
+				console.log(headers, 'headers');
 				const data = {
 					name: this.name,
 					description: this.description,
-					public: this.public,
+					public: false,
 				};
 
 				axios

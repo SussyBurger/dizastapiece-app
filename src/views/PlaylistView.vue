@@ -17,7 +17,19 @@
 			/>
 		</div>
 
-		<div class="relative pt-8">
+		<div
+			class="flex items-center justify-between border-b border-b-[#cecaca] dark:border-b-[#302d2d] px-1.5 pt-8 pb-2.5"
+		>
+			<div class="text-xs font-light pl-2 text-[#aeaeae] dark:text-[#4d4d4d]">
+				TRACK
+			</div>
+			<ClockTimeFiveOutline
+				class="text-[#aeaeae] dark:text-[#4d4d4d] pr-4"
+				:size="20"
+			/>
+		</div>
+
+		<div class="relative pt-2.5">
 			<ul class="flex flex-col justify-center w-full gap-2 md:justify-between">
 				<li
 					v-for="track in this.tracks.value"
@@ -26,7 +38,14 @@
 					@mouseleave="hoveredTrackId = null"
 					:key="track.id"
 				>
-					<div class="flex flex-1 hover:bg-[#979797] hover:bg-opacity-20">
+					<div
+						class="flex flex-1 hover:bg-[#979797] hover:bg-opacity-20"
+						:class="{
+							'bg-[#979797] bg-opacity-10':
+								selectedTrack === track.preview_url &&
+								track.preview_url !== null,
+						}"
+					>
 						<div class="flex flex-1">
 							<div class="flex items-center w-16 h-16 gap-2">
 								<div
@@ -73,7 +92,7 @@
 
 							<div class="pl-2">
 								<div
-									class="text-[#1f1f1f] dark:text-[#d9d9d9] ease-out duration-200"
+									class="text-[#1f1f1f] dark:text-[#d9d9d9] max-w-[100px] md:max-w-[240px] lg:max-w-lg truncate ease-out duration-200"
 								>
 									<span
 										:class="{
@@ -98,8 +117,19 @@
 										{{ track.artists[0].name }}
 									</span>
 								</div>
-								<div class="text-xs text-[#858590] ease-out duration-200">
-									{{ 'Released on ' + track.album.release_date }}
+								<div
+									class="text-xs text-[#858590] ease-out duration-200 max-w-[100px] md:max-w-[240px] lg:max-w-lg truncate"
+								>
+									<span
+										:class="{
+											'text-[#f27382]':
+												selectedTrack === track.preview_url &&
+												track.preview_url !== null,
+										}"
+									>
+										{{ track.album.name }}
+									</span>
+									<!-- {{ 'Released on ' + track.album.release_date }} -->
 								</div>
 							</div>
 						</div>
@@ -116,11 +146,17 @@
 								<HeartOutline @click="addTrackToPlaylist(track)" />
 							</button>
 							<button
-								class="mr-8 px-3 py-1 text-[#303030] dark:text-[#e3e3e8] transition duration-200 ease-in-out bg-transparent border-2 border-[#666] dark:border-[#9d9daf] hover:border-[#ef5465] dark:hover:border-[#ef5465] rounded-full hover:text-white hover:bg-[#ef5465]"
+								class="mr-8 px-1 md:px-3 py-1 text-[#303030] dark:text-[#e3e3e8] duration-200 ease-out bg-transparent border-2 border-[#666] dark:border-[#9d9daf] hover:border-[#ef5465] dark:hover:border-[#ef5465] rounded-full hover:text-white hover:bg-[#ef5465]"
 								@click="addTrackToPlaylist(track)"
 							>
-								Add to Playlist
+								<span class="hidden duration-200 ease-out md:block">
+									Add to Playlist
+								</span>
+								<span class="duration-200 ease-out md:hidden"><Plus /></span>
 							</button>
+							<span class="pr-1.5 md:pr-4">{{
+								trackDuration(track.duration_ms)
+							}}</span>
 						</div>
 					</div>
 				</li>
@@ -144,6 +180,7 @@
 	import Magnify from 'vue-material-design-icons/Magnify.vue';
 	import HeartOutline from 'vue-material-design-icons/HeartOutline.vue';
 	import DotsHorizontal from 'vue-material-design-icons/DotsHorizontal.vue';
+	import ClockTimeFiveOutline from 'vue-material-design-icons/ClockTimeFiveOutline.vue';
 
 	let isHover = ref(false);
 </script>
@@ -202,6 +239,12 @@
 				elmAudio.addEventListener('ended', () => {
 					this.isTrackPlaying = false;
 				});
+			},
+			trackDuration(durationMs) {
+				const convertToSeconds = Math.ceil(durationMs / 1000);
+				const minutes = Math.floor(convertToSeconds / 60);
+				const seconds = String(convertToSeconds % 60).padStart(2, '0');
+				return `${minutes}:${seconds}`;
 			},
 		},
 	};
