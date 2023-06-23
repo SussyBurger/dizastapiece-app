@@ -39,7 +39,7 @@
 			return {
 				name: '',
 				description: '',
-				public: false,
+				public: true,
 				userID: '316osap42zsktmc3hqsktsf22kk4',
 			};
 		},
@@ -55,7 +55,7 @@
 				const data = {
 					name: this.name,
 					description: this.description,
-					public: false,
+					public: true,
 				};
 
 				axios

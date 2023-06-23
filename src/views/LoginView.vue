@@ -13,9 +13,9 @@
 	    const clientId = '6c596d9413a74cc2b2d96308d41c3c8b';
 	    const redirect_uri = encodeURI('http://127.0.0.1:5173/callback');
 	    const state = this.generateString(16);
-	    const scope = 'user-read-email playlist-read-private playlist-modify-public user-read-private user-top-read';
-		const endcodeScope = encodeURIComponent(scope)
-	    let authUrl = 'https://accounts.spotify.com/authorize?response_type=token&redirect_uri='+redirect_uri+'&client_id='+clientId+'&state='+state+'&scope=playlist-modify-public'
+	    const scope = 'playlist-modify-public playlist-modify';
+		const encodeScope = encodeURIComponent(scope)
+	    let authUrl = 'https://accounts.spotify.com/authorize?response_type=token&redirect_uri='+redirect_uri+'&client_id='+clientId+'&state='+state+'&scope='+encodeScope
 	    console.log(authUrl, 'auth')
 		this.authUrl = authUrl.replace(' ', '')
 	  },
@@ -82,7 +82,7 @@
 								</svg>
 							</div>
 							<span
-								class="w-5/6 px-3.5 py-3 font-bold text-center hover:text-[#ef5465] duration-200 ease-out"
+								class="w-5/6 px-3.5 py-3 text-lg font-semibold uppercase font-primary max-md:truncate text-center hover:text-[#ef5465] duration-200 ease-out"
 							>
 								Sign in with Spotify
 							</span>

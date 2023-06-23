@@ -7,6 +7,7 @@
 
 	import Magnify from 'vue-material-design-icons/Magnify.vue';
 	import BellOutline from 'vue-material-design-icons/BellOutline.vue';
+	import Menu from 'vue-material-design-icons/Menu.vue';
 	import Login from 'vue-material-design-icons/Login.vue';
 	import Logout from 'vue-material-design-icons/Logout.vue';
 	import MenuDown from 'vue-material-design-icons/MenuDown.vue';
@@ -156,8 +157,12 @@
 				</div>
 
 				<div class="flex items-center w-full">
+					<Menu
+						class="block lg:hidden mt-1 pl-8 lg:pr-2 text-[#7E7E88] dark:text-[#7E7E88] cursor-pointer"
+						:size="22"
+					/>
 					<Magnify
-						class="mt-1 pl-10 lg:pr-2 text-[#7E7E88] dark:text-[#7E7E88]"
+						class="hidden lg:block mt-1 pl-10 lg:pr-2 text-[#7E7E88] dark:text-[#7E7E88]"
 						:size="22"
 					/>
 					<input
@@ -224,6 +229,7 @@
 										<RouterLink
 											to="/profile"
 											class="flex items-center truncate"
+											@click="hideProfile"
 										>
 											<span class="flex-1">My Profile</span>
 											<OpenInNew
@@ -240,6 +246,7 @@
 										<RouterLink
 											to="/userplaylist"
 											class="flex items-center w-full truncate"
+											@click="hideProfile"
 										>
 											<span class="flex-1">My Playlist</span>
 											<span class="flex-none"></span>
@@ -249,10 +256,12 @@
 								<li
 									class="px-4 py-2.5 cursor-pointer rounded-b-2xl border-t border-[#e2e2e2] dark:border-[#32323d] hover:bg-[#e6e6e6] dark:hover:bg-[#22222a] hover:text-[#ef5465] ease-out duration-200"
 								>
-									<a class="flex items-center truncate">
+									<a
+										class="flex items-center truncate"
+										@click="logout"
+									>
 										<span class="flex-1">Sign out</span>
 										<Logout
-											@click="logout"
 											class="flex-none"
 											:size="20"
 										/>

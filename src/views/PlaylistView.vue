@@ -41,7 +41,7 @@
 					<div
 						class="flex flex-1 hover:bg-[#979797] hover:bg-opacity-20"
 						:class="{
-							'bg-[#979797] bg-opacity-10':
+							'bg-[#979797] bg-opacity-10 ':
 								selectedTrack === track.preview_url &&
 								track.preview_url !== null,
 						}"
@@ -90,13 +90,13 @@
 								/>
 							</div>
 
-							<div class="pl-2">
+							<div class="items-center pl-2">
 								<div
 									class="text-[#1f1f1f] dark:text-[#d9d9d9] max-w-[100px] md:max-w-[240px] lg:max-w-lg truncate ease-out duration-200"
 								>
 									<span
 										:class="{
-											'text-[#ef5465]':
+											'text-[#ef5465] font-medium':
 												selectedTrack === track.preview_url &&
 												track.preview_url !== null,
 										}"
@@ -105,7 +105,7 @@
 									</span>
 								</div>
 								<div
-									class="text-[14px] text-[#1f1f1f] dark:text-[#d9d9d9] ease-out duration-200"
+									class="text-[#1f1f1f] dark:text-[#d9d9d9] ease-out duration-200"
 								>
 									<span
 										:class="{
@@ -137,16 +137,31 @@
 						<div class="flex items-center">
 							<button
 								class="mr-3 rounded-full p-1.5 hover:bg-[#ef5465] hover:text-[#e3e3e8] cursor-pointer ease-out duration-200"
+								:class="{
+									'text-[#ef5465]':
+										selectedTrack === track.preview_url &&
+										track.preview_url !== null,
+								}"
 							>
 								<DotsHorizontal />
 							</button>
 							<button
 								class="mr-3 rounded-full p-1.5 hover:bg-[#ef5465] hover:text-[#e3e3e8] cursor-pointer ease-out duration-200"
+								:class="{
+									'text-[#ef5465]':
+										selectedTrack === track.preview_url &&
+										track.preview_url !== null,
+								}"
 							>
 								<HeartOutline @click="addTrackToPlaylist(track)" />
 							</button>
 							<button
-								class="mr-8 px-1 md:px-3 py-1 text-[#303030] dark:text-[#e3e3e8] duration-200 ease-out bg-transparent border-2 border-[#666] dark:border-[#9d9daf] hover:border-[#ef5465] dark:hover:border-[#ef5465] rounded-full hover:text-white hover:bg-[#ef5465]"
+								class="mr-4 px-1 md:px-3 py-1 text-[#303030] dark:text-[#e3e3e8] duration-200 ease-out bg-transparent border-2 border-[#666] dark:border-[#9d9daf] hover:border-[#ef5465] dark:hover:border-[#ef5465] rounded-full hover:text-white hover:bg-[#ef5465]"
+								:class="{
+									'border-[#ef5465] dark:border-[#ef5465] text-[#ef5465] dark:text-[#ef5465] hover:text-white dark:hover:text-white':
+										selectedTrack === track.preview_url &&
+										track.preview_url !== null,
+								}"
 								@click="addTrackToPlaylist(track)"
 							>
 								<span class="hidden duration-200 ease-out md:block">
@@ -154,9 +169,15 @@
 								</span>
 								<span class="duration-200 ease-out md:hidden"><Plus /></span>
 							</button>
-							<span class="pr-1.5 md:pr-4">{{
-								trackDuration(track.duration_ms)
-							}}</span>
+							<span
+								class="px-1.5 md:pr-4"
+								:class="{
+									'text-[#ef5465]':
+										selectedTrack === track.preview_url &&
+										track.preview_url !== null,
+								}"
+								>{{ trackDuration(track.duration_ms) }}</span
+							>
 						</div>
 					</div>
 				</li>
@@ -173,7 +194,6 @@
 </template>
 
 <script setup>
-	import { ref } from 'vue';
 	import Play from 'vue-material-design-icons/Play.vue';
 	import Plus from 'vue-material-design-icons/Plus.vue';
 	import Pause from 'vue-material-design-icons/Pause.vue';
@@ -181,8 +201,6 @@
 	import HeartOutline from 'vue-material-design-icons/HeartOutline.vue';
 	import DotsHorizontal from 'vue-material-design-icons/DotsHorizontal.vue';
 	import ClockTimeFiveOutline from 'vue-material-design-icons/ClockTimeFiveOutline.vue';
-
-	let isHover = ref(false);
 </script>
 
 <script>
@@ -235,7 +253,6 @@
 					this.isTrackPlaying = true;
 					this.selectedTrack = track;
 				}
-				// add event listener to toggle the play/pause button when track finishes
 				elmAudio.addEventListener('ended', () => {
 					this.isTrackPlaying = false;
 				});
