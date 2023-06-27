@@ -1,31 +1,40 @@
 import { defineStore } from 'pinia';
 
-export const usePlayerStore = defineStore({
+export const useMusicStore = defineStore({
+	id: 'music',
 	state: () => ({
-		isTrackPlaying: false,
+		tracks: [],
 		selectedTrack: null,
+		isTrackPlaying: false,
 		playbackTime: 0,
-		audio: null,
-		currentVolume: 50,
+		audioPlayer: null, // Thêm tham chiếu vào store
 	}),
 	actions: {
+		setAudioPlayer(ref) {
+			this.audioPlayer = ref;
+		},
 		playTrack(track) {
-			const elmAudio = document.getElementById('audio-play');
-			if (elmAudio.src === track && !elmAudio.paused) {
-				this.playbackTime = elmAudio.currentTime;
-				elmAudio.pause();
+			if (!this.audioPlayer) {
+				console.warn('audioPlayer is not available');
+				return;
+			}
+
+			if (this.selectedTrack === track.preview_url && this.audioPlayer.paused) {
+				this.audioPlayer.play();
+				this.isTrackPlaying = true;
+			} else if (
+				this.selectedTrack === track.preview_url &&
+				!this.audioPlayer.paused
+			) {
+				this.audioPlayer.pause();
 				this.isTrackPlaying = false;
 			} else {
-				elmAudio.src = track;
-				elmAudio.currentTime = this.playbackTime;
-				elmAudio.play();
+				this.audioPlayer.src = track.preview_url;
+				this.audioPlayer.load();
+				this.audioPlayer.play();
 				this.isTrackPlaying = true;
-				this.selectedTrack = track;
+				this.selectedTrack = track.preview_url;
 			}
-			// add event listener to toggle the play/pause button when track finishes
-			elmAudio.addEventListener('ended', () => {
-				this.isTrackPlaying = false;
-			});
 		},
 	},
 });

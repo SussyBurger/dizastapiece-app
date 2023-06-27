@@ -7,6 +7,7 @@ module.exports = {
 			backgroundImage: (theme) => ({
 				'logo-light': "url('/images/logo-black.png')",
 				'logo-dark': "url('/images/logo-white.png')",
+				'logo-icon': "url('/images/logo-icon.png')",
 			}),
 		},
 		fontFamily: {

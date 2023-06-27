@@ -70,7 +70,7 @@
 											selectedTrack !== track.preview_url,
 									}"
 									class="absolute left-2 z-20 p-2 rounded-full bg-white hover:bg-[#ef5465] text-black hover:text-white cursor-pointer ease-out duration-200"
-									@click="playTrack(track.preview_url)"
+									@click="playTrack(track.preview_url, track.album.name)"
 								>
 									<Play
 										v-if="
@@ -176,8 +176,8 @@
 										selectedTrack === track.preview_url &&
 										track.preview_url !== null,
 								}"
-								>{{ trackDuration(track.duration_ms) }}</span
-							>
+								>{{ trackDuration(track.duration_ms) }}
+							</span>
 						</div>
 					</div>
 				</li>
@@ -240,7 +240,7 @@
 						});
 				}
 			},
-			playTrack(track) {
+			playTrack(track, album) {
 				const elmAudio = document.getElementById('audio-play');
 				if (elmAudio.src === track && !elmAudio.paused) {
 					this.playbackTime = elmAudio.currentTime;
@@ -262,6 +262,25 @@
 				const minutes = Math.floor(convertToSeconds / 60);
 				const seconds = String(convertToSeconds % 60).padStart(2, '0');
 				return `${minutes}:${seconds}`;
+			},
+			addTrackToPlaylist(track) {
+				const playlist_id = '1wU6KVw5aeIQMNEzRbeVrA';
+				const url = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`;
+				const headers = {
+					Authorization: `Bearer ${TOKEN_USER}`,
+					'Content-Type': 'application/json',
+				};
+				const body = {
+					uris: [track.uri],
+				};
+				axios
+					.post(url, body, { headers })
+					.then((response) => {
+						console.log(response);
+					})
+					.catch((error) => {
+						console.log(error);
+					});
 			},
 		},
 	};

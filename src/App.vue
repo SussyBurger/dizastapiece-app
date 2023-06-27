@@ -1,140 +1,3 @@
-<script setup>
-	import { ref, onBeforeMount } from 'vue';
-	import { RouterLink, RouterView } from 'vue-router';
-
-	import MusicPlayer from './components/MusicPlayer.vue';
-	import PlayerControl from './components/PlayerControl.vue';
-
-	import Magnify from 'vue-material-design-icons/Magnify.vue';
-	import BellOutline from 'vue-material-design-icons/BellOutline.vue';
-	import Menu from 'vue-material-design-icons/Menu.vue';
-	import Login from 'vue-material-design-icons/Login.vue';
-	import Logout from 'vue-material-design-icons/Logout.vue';
-	import MenuDown from 'vue-material-design-icons/MenuDown.vue';
-	import OpenInNew from 'vue-material-design-icons/OpenInNew.vue';
-
-	import ChevronDoubleRight from 'vue-material-design-icons/ChevronDoubleRight.vue';
-	import Music from 'vue-material-design-icons/Music.vue';
-	import ViewGridOutline from 'vue-material-design-icons/ViewGridOutline.vue';
-	import AccountMusic from 'vue-material-design-icons/AccountMusic.vue';
-	import PlaylistMusic from 'vue-material-design-icons/PlaylistMusic.vue';
-	import ThemeLightDark from 'vue-material-design-icons/ThemeLightDark.vue';
-
-	import { useSongStore } from './stores/song';
-	import { storeToRefs } from 'pinia';
-
-	import { useDark, useToggle } from '@vueuse/core';
-	const isDark = useDark();
-	const toggleDark = useToggle(isDark);
-
-	const is_expanded = ref(false);
-	const toggleMenu = () => {
-		is_expanded.value = !is_expanded.value;
-	};
-
-	const is_opened = ref(false);
-	const showProfile = () => {
-		is_opened.value = !is_opened.value;
-	};
-	const hideProfile = () => {
-		is_opened.value = false;
-	};
-
-	const useSong = useSongStore();
-	const { isPlaying, currentTrack, trackTime, hasLyrics } =
-		storeToRefs(useSong);
-
-	onBeforeMount(() => {
-		isPlaying.value = false;
-		hasLyrics.value = false;
-		trackTime.value = '0:00';
-	});
-</script>
-
-<script>
-	export default {
-		async mounted() {
-			if (
-				!localStorage.getItem('authCode') ||
-				localStorage.getItem('authCode').accessToken === null
-			) {
-				console.log('logout');
-				this.localToData();
-				this.logout();
-			} else {
-				console.log('login');
-				this.localToData();
-				this.playlists = await this.spotCallAPI();
-				this.playlists = JSON.parse(JSON.stringify(this.playlists));
-				this.newPlayList = JSON.parse(JSON.stringify(this.playlists));
-				this.toggle = true;
-			}
-		},
-		components: {
-			RouterLink,
-		},
-		data() {
-			return {
-				authCode: {
-					accessToken: null,
-					tokenType: null,
-					expiredIn: null,
-					state: null,
-				},
-				toggle: false,
-				user: {
-					name: null,
-					url: null,
-				},
-				artists: [],
-				playlists: [],
-				newPlayList: [],
-				errors: null,
-			};
-		},
-		watch: {
-			errors: function () {
-				this.logout();
-			},
-		},
-		methods: {
-			localToData: function () {
-				const authCode = JSON.parse(localStorage.getItem('authCode'));
-				this.authCode.accessToken =
-					authCode && authCode.accessToken ? authCode.accessToken : '';
-				console.log(authCode, 'authCode');
-				this.authCode.tokenType = authCode.tokenType;
-				this.authCode.expiredIn = authCode.expiredIn;
-				this.authCode.state = authCode.state;
-			},
-			spotCallAPI: function () {
-				function handleErrors(response) {
-					if (!response.ok) throw new Error(response.status);
-					return response;
-				}
-				fetch('https://api.spotify.com/v1/me', {
-					method: 'get',
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: 'Bearer ' + this.authCode.accessToken,
-					},
-				})
-					.then(handleErrors)
-					.then((res) => res.json())
-					.then((data) => {
-						this.user.name = data.display_name;
-						this.user.url = data.images.length > 0 ? data.images[0].url : null;
-					})
-					.catch((error) => (this.errors = error));
-			},
-			logout: function () {
-				localStorage.removeItem('authCode');
-				this.$router.replace('/login');
-			},
-		},
-	};
-</script>
-
 <template>
 	<div
 		id="App"
@@ -144,22 +7,26 @@
 			id="Header"
 			class="fixed flex items-center justify-evenly lg:flex-initial h-14 w-full lg:w-screen bg-[#f2f2f2] text-[#303030] border-b border-b-[#e0e0e0] dark:bg-[#191922] dark:text-[#e3e3e8] dark:border-b-[#32323d] z-50"
 		>
-			<div class="flex flex-row-reverse w-2/3 lg:flex-row lg:w-full">
+			<div class="flex flex-row w-2/3 lg:w-full">
 				<div
 					id="logo"
-					class="mx-6 cursor-pointer"
+					class="hidden mx-6 cursor-pointer lg:block"
 				>
 					<RouterLink to="/">
 						<div
 							class="bg-logo-light dark:bg-logo-dark bg-contain h-[54px] w-48 bg-center bg-no-repeat ease-out duration-300"
 						></div>
+						<!-- 	<div
+							class="bg-logo-icon block lg:hidden h-[54px] w-[54px] bg-contain bg-center bg-no-repeat z-50"
+						></div> -->
 					</RouterLink>
 				</div>
 
 				<div class="flex items-center w-full">
 					<Menu
 						class="block lg:hidden mt-1 pl-8 lg:pr-2 text-[#7E7E88] dark:text-[#7E7E88] cursor-pointer"
-						:size="22"
+						:size="28"
+						@click="toggleMenu"
 					/>
 					<Magnify
 						class="hidden lg:block mt-1 pl-10 lg:pr-2 text-[#7E7E88] dark:text-[#7E7E88]"
@@ -442,6 +309,117 @@
 			</div>
 		</aside>
 
+		<div
+			class="fixed lg:hidden w-full h-screen duration-200 ease-in-out bg-black bg-opacity-70 dark:bg-[#0c0d0d] dark:bg-opacity-60"
+			:class="`${is_expanded ? 'z-50 ' : ' hidden'}`"
+			@click="toggleMenu"
+		></div>
+
+		<aside
+			id="sideNavOverlay"
+			class="fixed flex flex-col lg:hidden min-h-screen bg-[#F2F2F2] dark:bg-[#191922] border-r border-[#e0e0e0] dark:border-[#32323D] ease-out duration-200 z-50"
+			:class="`${is_expanded ? 'w-60 ' : ' -ml-64'}`"
+		>
+			<div
+				class="truncate ease-out duration-300 flex items-center justify-end bg-[#d9d9d9] dark:bg-[#141418]"
+			>
+				<span
+					class="flex items-center font-semibold text-[20px] mx-4 my-3.5 w-full lowercase"
+				>
+					<Menu
+						:size="28"
+						class="opacity-50 cursor-pointer"
+						@click="toggleMenu"
+					/>
+					<RouterLink to="/">
+						<div
+							class="bg-logo-light dark:bg-logo-dark bg-contain h-[27px] ml-4 w-[154px] bg-center bg-no-repeat ease-out duration-300"
+						></div>
+						<!-- 	<div
+							class="bg-logo-icon block lg:hidden h-[54px] w-[54px] bg-contain bg-center bg-no-repeat z-50"
+						></div> -->
+					</RouterLink>
+				</span>
+			</div>
+
+			<!-- <div class="mt-7"></div> -->
+
+			<div
+				class="ease-out duration-300 w-full hover:text-[#ef5465] hover:bg-[#e6e6e6] dark:hover:bg-[#2b2b3b]"
+			>
+				<RouterLink
+					to="/"
+					class="flex items-center py-3 mx-4"
+				>
+					<Music :size="28" />
+					<span
+						class="truncate text-[18px] pl-4 opacity-1 ease-out duration-300"
+					>
+						Main Page
+					</span>
+				</RouterLink>
+			</div>
+
+			<div
+				class="mx-0 w-full ease-out duration-300 hover:text-[#ef5465] hover:bg-[#e6e6e6] dark:hover:bg-[#2b2b3b]"
+			>
+				<RouterLink
+					to="/toptracks"
+					class="flex items-center py-3 mx-4 truncate"
+				>
+					<AccountMusic :size="28" />
+					<span class="text-[18px] pl-4 opacity-1 ease-out duration-300">
+						Featured Artists
+					</span>
+				</RouterLink>
+			</div>
+
+			<div
+				class="mx-0 w-full ease-out duration-300 hover:text-[#ef5465] hover:bg-[#e6e6e6] dark:hover:bg-[#2b2b3b]"
+			>
+				<RouterLink
+					to="/playlist"
+					class="flex items-center py-3 mx-4"
+				>
+					<PlaylistMusic :size="28" />
+					<span class="text-[18px] pl-4 opacity-1 ease-out duration-300">
+						Playlist
+					</span>
+				</RouterLink>
+			</div>
+
+			<div
+				class="mx-0 w-full ease-out duration-300 hover:text-[#ef5465] hover:bg-[#e6e6e6] dark:hover:bg-[#2b2b3b]"
+			>
+				<RouterLink
+					to="/categories"
+					class="flex items-center py-3 mx-4"
+				>
+					<ViewGridOutline :size="28" />
+					<span class="text-[18px] pl-4 opacity-1 ease-out duration-300">
+						Categories
+					</span>
+				</RouterLink>
+			</div>
+
+			<div class="mt-14"></div>
+
+			<div
+				class="mx-0 ease-out duration-300 cursor-pointer hover:bg-[#e6e6e6] hover:text-[#ef5465] dark:hover:bg-[#2b2b3b]"
+				@click="toggleDark()"
+			>
+				<div class="flex items-center py-3 mx-4 bottom-24">
+					<ThemeLightDark :size="28" />
+
+					<span
+						class="truncate text-[16px] ease-out duration-300 pl-4 opacity-1"
+					>
+						{{ isDark ? 'Dark Mode' : 'Light Mode' }}
+					</span>
+				</div>
+			</div>
+		</aside>
+
 		<main
 			class="py-16 ease-out duration-300 w-full min-w-[480px]"
 			:class="`${is_expanded ? 'pl-2 lg:pl-60' : 'pl-2 lg:pl-16'}`"
@@ -451,7 +429,7 @@
 		</main>
 	</div>
 
-	<!-- <MusicPlayer v-if="currentTrack" /> -->
+	<MusicPlayer v-if="currentTrack" />
 	<!-- <PlayerControl /> -->
 
 	<div
@@ -460,4 +438,141 @@
 	></div>
 </template>
 
-<style></style>
+<script setup>
+	import { ref, onBeforeMount } from 'vue';
+	import { RouterLink, RouterView } from 'vue-router';
+
+	import MusicPlayer from './components/MusicPlayer.vue';
+	import PlayerControl from './components/PlayerControl.vue';
+
+	import Magnify from 'vue-material-design-icons/Magnify.vue';
+	import BellOutline from 'vue-material-design-icons/BellOutline.vue';
+	import Menu from 'vue-material-design-icons/Menu.vue';
+	import Login from 'vue-material-design-icons/Login.vue';
+	import Logout from 'vue-material-design-icons/Logout.vue';
+	import MenuDown from 'vue-material-design-icons/MenuDown.vue';
+	import OpenInNew from 'vue-material-design-icons/OpenInNew.vue';
+
+	import ChevronDoubleRight from 'vue-material-design-icons/ChevronDoubleRight.vue';
+	import Music from 'vue-material-design-icons/Music.vue';
+	import ViewGridOutline from 'vue-material-design-icons/ViewGridOutline.vue';
+	import AccountMusic from 'vue-material-design-icons/AccountMusic.vue';
+	import PlaylistMusic from 'vue-material-design-icons/PlaylistMusic.vue';
+	import ThemeLightDark from 'vue-material-design-icons/ThemeLightDark.vue';
+
+	import { useSongStore } from './stores/song';
+	import { storeToRefs } from 'pinia';
+
+	import { useDark, useToggle } from '@vueuse/core';
+	const isDark = useDark();
+	const toggleDark = useToggle(isDark);
+
+	const is_expanded = ref(false);
+	const toggleMenu = () => {
+		is_expanded.value = !is_expanded.value;
+	};
+
+	const is_opened = ref(false);
+	const showProfile = () => {
+		is_opened.value = !is_opened.value;
+	};
+	const hideProfile = () => {
+		is_opened.value = false;
+	};
+
+	const useSong = useSongStore();
+	const { isPlaying, currentTrack, trackTime, hasLyrics } =
+		storeToRefs(useSong);
+
+	onBeforeMount(() => {
+		isPlaying.value = false;
+		hasLyrics.value = false;
+		trackTime.value = '0:00';
+	});
+
+	let sideNavOverlay = ref(null);
+</script>
+
+<script>
+	export default {
+		async mounted() {
+			if (
+				!localStorage.getItem('authCode') ||
+				localStorage.getItem('authCode').accessToken === null
+			) {
+				console.log('logout');
+				this.localToData();
+				this.logout();
+			} else {
+				console.log('login');
+				this.localToData();
+				this.playlists = await this.spotCallAPI();
+				this.playlists = JSON.parse(JSON.stringify(this.playlists));
+				this.newPlayList = JSON.parse(JSON.stringify(this.playlists));
+				this.toggle = true;
+			}
+		},
+		components: {
+			RouterLink,
+		},
+		data() {
+			return {
+				authCode: {
+					accessToken: null,
+					tokenType: null,
+					expiredIn: null,
+					state: null,
+				},
+				toggle: false,
+				user: {
+					name: null,
+					url: null,
+				},
+				artists: [],
+				playlists: [],
+				newPlayList: [],
+				errors: null,
+			};
+		},
+		watch: {
+			errors: function () {
+				this.logout();
+			},
+		},
+		methods: {
+			localToData: function () {
+				const authCode = JSON.parse(localStorage.getItem('authCode'));
+				this.authCode.accessToken =
+					authCode && authCode.accessToken ? authCode.accessToken : '';
+				console.log(authCode, 'authCode');
+				this.authCode.tokenType = authCode.tokenType;
+				this.authCode.expiredIn = authCode.expiredIn;
+				this.authCode.state = authCode.state;
+			},
+			spotCallAPI: function () {
+				function handleErrors(response) {
+					if (!response.ok) throw new Error(response.status);
+					return response;
+				}
+				fetch('https://api.spotify.com/v1/me', {
+					method: 'get',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: 'Bearer ' + this.authCode.accessToken,
+					},
+				})
+					.then(handleErrors)
+					.then((res) => res.json())
+					.then((data) => {
+						this.user.name = data.display_name;
+						this.user.url = data.images.length > 0 ? data.images[0].url : null;
+					})
+					.catch((error) => (this.errors = error));
+			},
+			logout: function () {
+				localStorage.removeItem('authCode');
+				this.$router.replace('/login');
+			},
+		},
+	};
+</script>
