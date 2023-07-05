@@ -1,7 +1,3 @@
-<script setup>
-	import { RouterLink, RouterView } from 'vue-router';
-</script>
-
 <template>
 	<div>
 		<header class="flex justify-between pt-6 h-14 min-w-[650px]">
@@ -45,4 +41,4 @@
 	</div>
 </template>
 
-<style></style>
+<script></script>

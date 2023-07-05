@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import FeaturedView from '../views/FeaturedView.vue';
-import PlaylistView from '../views/PlaylistView.vue';
 import CategoryView from '../views/CategoryView.vue';
+import SearchView from '../views/SearchView.vue';
+
 import LoginView from '../views/LoginView.vue';
 import CallbackView from '../views/CallbackView.vue';
 import UserView from '../views/UserView.vue';
@@ -49,14 +50,14 @@ const router = createRouter({
 			component: UserPlaylist,
 		},
 		{
-			path: '/playlist',
-			name: 'playlist',
-			component: PlaylistView,
-		},
-		{
 			path: '/categories',
 			name: 'categories',
 			component: CategoryView,
+		},
+		{
+			path: '/search',
+			name: 'search',
+			component: SearchView,
 		},
 		{
 			path: '/login',

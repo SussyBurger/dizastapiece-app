@@ -16,27 +16,24 @@
 						<div
 							class="bg-logo-light dark:bg-logo-dark bg-contain h-[54px] w-48 bg-center bg-no-repeat ease-out duration-300"
 						></div>
-						<!-- 	<div
-							class="bg-logo-icon block lg:hidden h-[54px] w-[54px] bg-contain bg-center bg-no-repeat z-50"
-						></div> -->
 					</RouterLink>
 				</div>
 
-				<div class="flex items-center w-full">
+				<div class="flex items-center flex-initial w-full">
 					<Menu
 						class="block lg:hidden mt-1 pl-8 lg:pr-2 text-[#7E7E88] dark:text-[#7E7E88] cursor-pointer"
 						:size="28"
 						@click="toggleMenu"
 					/>
-					<Magnify
-						class="hidden lg:block mt-1 pl-10 lg:pr-2 text-[#7E7E88] dark:text-[#7E7E88]"
+					<!-- 					<Magnify
+						class="mt-1 pl-10 lg:pr-2 text-[#7E7E88] dark:text-[#7E7E88]"
 						:size="22"
 					/>
 					<input
-						class="w-full hidden lg:block p-1 bg-transparent font-[300] outline-none border-b border-[#ccc] dark:border-[#32323D] placeholder-[#4d4d4d] max-w-[calc(100%-80px)] ease-out duration-300"
+						class="w-full p-1 bg-transparent font-[300] outline-none border-b border-[#ccc] dark:border-[#32323D] placeholder-[#4d4d4d] max-w-[calc(100%-80px)] ease-out duration-300"
 						placeholder="Search"
 						type="text"
-					/>
+					/> -->
 				</div>
 			</div>
 
@@ -96,7 +93,6 @@
 										<RouterLink
 											to="/profile"
 											class="flex items-center truncate"
-											@click="hideProfile"
 										>
 											<span class="flex-1">My Profile</span>
 											<OpenInNew
@@ -172,7 +168,7 @@
 
 		<!-- Side Nav -->
 		<aside
-			class="fixed hidden lg:flex flex-col top-14 overflow-hidden min-h-screen bg-[#F2F2F2] dark:bg-[#191922] border-r border-[#e0e0e0] dark:border-[#32323D] ease-out duration-300 z-50"
+			class="fixed hidden font-primary lg:flex flex-col top-14 overflow-hidden min-h-screen bg-[#F2F2F2] dark:bg-[#191922] border-r border-[#e0e0e0] dark:border-[#32323D] ease-out duration-300 z-50"
 			:class="`${is_expanded ? 'w-60 ' : 'w-16'}`"
 		>
 			<div
@@ -213,7 +209,7 @@
 					to="/"
 					class="flex items-center py-3 mx-4"
 				>
-					<Music :size="28" />
+					<Home :size="28" />
 					<span
 						class="truncate text-[18px]"
 						:class="`${
@@ -231,10 +227,10 @@
 				class="mx-0 w-full ease-out duration-300 hover:text-[#ef5465] hover:bg-[#e6e6e6] dark:hover:bg-[#2b2b3b]"
 			>
 				<RouterLink
-					to="/toptracks"
-					class="flex items-center py-3 mx-4 truncate"
+					to="/search"
+					class="flex items-center py-3 mx-4"
 				>
-					<AccountMusic :size="28" />
+					<Magnify :size="28" />
 					<span
 						class="text-[18px]"
 						:class="`${
@@ -243,7 +239,7 @@
 								: 'opacity-0 ease-out duration-300'
 						}`"
 					>
-						Featured Artists
+						Search
 					</span>
 				</RouterLink>
 			</div>
@@ -252,10 +248,10 @@
 				class="mx-0 w-full ease-out duration-300 hover:text-[#ef5465] hover:bg-[#e6e6e6] dark:hover:bg-[#2b2b3b]"
 			>
 				<RouterLink
-					to="/playlist"
-					class="flex items-center py-3 mx-4"
+					to="/toptracks"
+					class="flex items-center py-3 mx-4 truncate"
 				>
-					<PlaylistMusic :size="28" />
+					<Music :size="28" />
 					<span
 						class="text-[18px]"
 						:class="`${
@@ -264,7 +260,7 @@
 								: 'opacity-0 ease-out duration-300'
 						}`"
 					>
-						Playlist
+						Trending
 					</span>
 				</RouterLink>
 			</div>
@@ -274,7 +270,7 @@
 			>
 				<RouterLink
 					to="/categories"
-					class="flex items-center py-3 mx-4"
+					class="flex items-center py-3 mx-4 truncate"
 				>
 					<ViewGridOutline :size="28" />
 					<span
@@ -285,7 +281,7 @@
 								: 'opacity-0 ease-out duration-300'
 						}`"
 					>
-						Categories
+						Cattegories
 					</span>
 				</RouterLink>
 			</div>
@@ -317,7 +313,7 @@
 
 		<aside
 			id="sideNavOverlay"
-			class="fixed flex flex-col lg:hidden min-h-screen bg-[#F2F2F2] dark:bg-[#191922] border-r border-[#e0e0e0] dark:border-[#32323D] ease-out duration-200 z-50"
+			class="fixed flex font-primary flex-col lg:hidden min-h-screen bg-[#F2F2F2] dark:bg-[#191922] border-r border-[#e0e0e0] dark:border-[#32323D] ease-out duration-200 z-50"
 			:class="`${is_expanded ? 'w-60 ' : ' -ml-64'}`"
 		>
 			<div
@@ -351,7 +347,7 @@
 					to="/"
 					class="flex items-center py-3 mx-4"
 				>
-					<Music :size="28" />
+					<Home :size="28" />
 					<span
 						class="truncate text-[18px] pl-4 opacity-1 ease-out duration-300"
 					>
@@ -364,12 +360,12 @@
 				class="mx-0 w-full ease-out duration-300 hover:text-[#ef5465] hover:bg-[#e6e6e6] dark:hover:bg-[#2b2b3b]"
 			>
 				<RouterLink
-					to="/toptracks"
+					to="/search"
 					class="flex items-center py-3 mx-4 truncate"
 				>
-					<AccountMusic :size="28" />
+					<Magnify :size="28" />
 					<span class="text-[18px] pl-4 opacity-1 ease-out duration-300">
-						Featured Artists
+						Search
 					</span>
 				</RouterLink>
 			</div>
@@ -378,12 +374,12 @@
 				class="mx-0 w-full ease-out duration-300 hover:text-[#ef5465] hover:bg-[#e6e6e6] dark:hover:bg-[#2b2b3b]"
 			>
 				<RouterLink
-					to="/playlist"
+					to="/toptracks"
 					class="flex items-center py-3 mx-4"
 				>
-					<PlaylistMusic :size="28" />
+					<Music :size="28" />
 					<span class="text-[18px] pl-4 opacity-1 ease-out duration-300">
-						Playlist
+						Trending
 					</span>
 				</RouterLink>
 			</div>
@@ -421,16 +417,14 @@
 		</aside>
 
 		<main
-			class="py-16 ease-out duration-300 w-full min-w-[480px]"
-			:class="`${is_expanded ? 'pl-2 lg:pl-60' : 'pl-2 lg:pl-16'}`"
-			@click="hideProfile"
+			class="py-[54px] ease-out duration-300 w-full min-w-[480px]"
+			:class="`${is_expanded ? 'lg:pl-60' : 'lg:pl-16'}`"
 		>
 			<RouterView @click="hideProfile" />
 		</main>
 	</div>
 
 	<MusicPlayer v-if="currentTrack" />
-	<!-- <PlayerControl /> -->
 
 	<div
 		class="w-full h-full"
@@ -443,8 +437,8 @@
 	import { RouterLink, RouterView } from 'vue-router';
 
 	import MusicPlayer from './components/MusicPlayer.vue';
-	import PlayerControl from './components/PlayerControl.vue';
 
+	import Fire from 'vue-material-design-icons/Fire.vue';
 	import Magnify from 'vue-material-design-icons/Magnify.vue';
 	import BellOutline from 'vue-material-design-icons/BellOutline.vue';
 	import Menu from 'vue-material-design-icons/Menu.vue';
@@ -454,6 +448,7 @@
 	import OpenInNew from 'vue-material-design-icons/OpenInNew.vue';
 
 	import ChevronDoubleRight from 'vue-material-design-icons/ChevronDoubleRight.vue';
+	import Home from 'vue-material-design-icons/Home.vue';
 	import Music from 'vue-material-design-icons/Music.vue';
 	import ViewGridOutline from 'vue-material-design-icons/ViewGridOutline.vue';
 	import AccountMusic from 'vue-material-design-icons/AccountMusic.vue';

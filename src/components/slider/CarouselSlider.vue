@@ -63,14 +63,20 @@
 					class="rounded-full p-2 hover:bg-[#e6e6e6] dark:hover:bg-[#2b2b2b]"
 					@click="slideTo(false)"
 				>
-					<ChevronLeft class="dark:text-white" :size="30" />
+					<ChevronLeft
+						class="dark:text-white"
+						:size="30"
+					/>
 				</button>
 				<div class="px-2"></div>
 				<button
 					class="rounded-full p-2 hover:bg-[#e6e6e6] dark:hover:bg-[#2b2b2b]"
 					@click="slideTo(true)"
 				>
-					<ChevronRight class="dark:text-white" :size="30" />
+					<ChevronRight
+						class="dark:text-white"
+						:size="30"
+					/>
 				</button>
 			</div>
 		</div>
@@ -84,7 +90,11 @@
 			:transition="800"
 			snapAlign="start"
 		>
-			<Slide v-for="slide in data" :key="slide" class="flex items-baseline">
+			<Slide
+				v-for="slide in data"
+				:key="slide"
+				class="flex items-baseline"
+			>
 				<CarouselItems :slide="slide" />
 			</Slide>
 		</Carousel>

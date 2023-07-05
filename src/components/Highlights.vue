@@ -9,7 +9,10 @@
 </script>
 
 <template>
-	<RouterLink to="/artist" class="cursor-pointer">
+	<RouterLink
+		to="/artist"
+		class="cursor-pointer"
+	>
 		<div
 			class="relative"
 			@mouseenter="isHover = true"
@@ -21,11 +24,11 @@
 						? 'transition ease-in duration-150 bg-opacity-30'
 						: 'transition ease-out duration-150 bg-opacity-5'
 				"
-				class="absolute w-full h-full bg-black z-10 rounded-md"
+				class="absolute z-10 w-full h-full bg-black rounded-md"
 			>
-				<div class="absolute pl-4 pt-4 z-50">
+				<div class="absolute z-50 pt-4 pl-4">
 					<div
-						class="bg-black bg-opacity-40 rounded-md text-white text-sm text-center px-2 py-1 inline-block"
+						class="inline-block px-2 py-1 text-sm text-center text-white bg-black rounded-md bg-opacity-40"
 					>
 						Album
 					</div>
@@ -34,11 +37,14 @@
 				</div>
 			</div>
 
-			<div class="absolute z-45 bottom-3 left-3 rounded-full bg-white p-1.5">
+			<!-- 			<div class="absolute z-45 bottom-3 left-3 rounded-full bg-white p-1.5">
 				<Play :size="27" class="text-black" />
-			</div>
+			</div> -->
 
-			<img :src="image" class="rounded-lg" />
+			<img
+				:src="image"
+				class="rounded-lg"
+			/>
 		</div>
 	</RouterLink>
 </template>

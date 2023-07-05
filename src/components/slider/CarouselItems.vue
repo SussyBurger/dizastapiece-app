@@ -12,7 +12,10 @@
 
 <template>
 	<div class="pl-8">
-		<RouterLink to="/artist" class="cursor-pointer">
+		<RouterLink
+			to="/artist"
+			class="cursor-pointer"
+		>
 			<div
 				class="relative"
 				@mouseenter="isHover = true"
@@ -74,7 +77,10 @@
 					src="/images/sound-wave-icon.png"
 				/>
 
-				<img :src="slide.url" class="rounded-md aspect-square" />
+				<img
+					:src="slide.url"
+					class="rounded-md aspect-square"
+				/>
 			</div>
 
 			<div class="mt-2 text-left dark:text-white">

@@ -57,18 +57,28 @@
 		class="w-full flex items-center justify-between p-2 hover:bg-[#979797] hover:bg-opacity-5"
 	>
 		<div class="flex items-center">
+			<div
+				v-if="track"
+				:class="
+					track && currentTrack && currentTrack.name === track.name
+						? 'text-[#ef5464]'
+						: 'text-[#333] dark:text-[#d4d4d4]'
+				"
+				class="pr-4 text-sm cursor-pointer hover:underline"
+			>
+				{{ track.id }}.
+			</div>
 			<div class="relative">
-				<div
-					v-if="isHover"
-					class="p-1 mt-[3px] ml-0.5 absolute rounded-full bg-white cursor-pointer text-black"
-				>
+				<div v-if="isHover">
 					<Play
 						v-if="!isPlaying && isHover"
 						@click="useSong.playOrPauseThisSong(artist, track)"
+						class="p-1 mt-[3px] ml-0.5 absolute rounded-full bg-white cursor-pointer text-black"
 					/>
 					<Play
 						v-else-if="isPlaying && currentTrack.name !== track.name"
 						@click="useSong.loadSong(artist, track)"
+						class="p-1 mt-[3px] ml-0.5 absolute rounded-full bg-white cursor-pointer text-black"
 					/>
 				</div>
 
@@ -129,7 +139,7 @@
 				"
 				class="pl-4 text-sm cursor-pointer hover:underline"
 			>
-				{{ track.id }}. {{ track.name }}
+				{{ track.name }}
 			</div>
 		</div>
 

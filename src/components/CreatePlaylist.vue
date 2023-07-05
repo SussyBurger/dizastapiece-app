@@ -1,34 +1,75 @@
 <template>
-	<div class="flex-col items-center">
-		<h2>Add new playlist</h2>
+	<main
+		class="max-w-xl p-4 rounded-md border-2 border-[#32323d] font-primary flex-col items-center bg-[#282828] text-[#fafafa]"
+	>
+		<div class="flex items-center">
+			<h2 class="flex-1 px-4 text-lg uppercase">Add new playlist</h2>
+
+			<!-- <CloseBoxOutline
+				class="flex-none pr-1 cursor-pointer hover:text-[#ccc] ease-out duration-200"
+			/> -->
+		</div>
 		<form
 			@submit.prevent="createPlaylist"
 			class="flex-col"
 		>
-			<label class="flex">
-				Name:
-				<input
-					type="text"
-					v-model="name"
-				/>
-			</label>
-			<label class="flex">
-				Description:
-				<textarea v-model="description"></textarea>
-			</label>
-			<label class="flex">
-				Public:
-				<input type="checkbox" />
-			</label>
-			<button
-				type="submit"
-				class="border"
+			<div class="flex">
+				<div class="flex-col px-2 my-1.5">
+					<span class="flex items-center px-2 my-2">Name</span>
+					<span class="flex px-2 py-4">Description</span>
+					<span class="flex items-center px-2 pt-5"> Public </span>
+				</div>
+				<div class="flex-col w-full">
+					<div class="px-2 my-2">
+						<label class="flex">
+							<input
+								type="text"
+								v-model="name"
+								class="w-full bg-[#3e3e3e] placeholder-[#ccc] placeholder:opacity-20 rounded-md border border-[#535353] ml-14 outline-none px-3 py-1"
+								placeholder="Enter playlist name"
+							/>
+						</label>
+					</div>
+
+					<div class="px-2 my-3">
+						<label class="flex">
+							<textarea
+								v-model="description"
+								class="bg-[#3e3e3e] placeholder-[#ccc] placeholder:opacity-20 w-full border border-[#535353] rounded-md resize-none ml-14 px-3 py-1 outline-none"
+								placeholder="Add an optional description"
+							></textarea>
+						</label>
+					</div>
+
+					<div class="mt-3">
+						<input
+							type="checkbox"
+							class="bg-[#3e3e3e] ml-16 outline-none"
+						/>
+					</div>
+				</div>
+			</div>
+			<div
+				class="flex items-center text-xs text-[#ccc] px-6 justify-center opacity-30"
 			>
-				Create Playlist
-			</button>
+				(click anywhere outside to close)
+			</div>
+
+			<div class="flex flex-row-reverse w-full px-2 my-2">
+				<button
+					type="submit"
+					class="flex-end border hover:bg-[#ef5465] ease-out duration-200 border-[#535353] hover:border-[#ef5465] px-2 py-1.5 rounded-md"
+				>
+					Create Playlist
+				</button>
+			</div>
 		</form>
-	</div>
+	</main>
 </template>
+
+<script setup>
+	import CloseBoxOutline from 'vue-material-design-icons/CloseBoxOutline.vue';
+</script>
 
 <script>
 	import axios from 'axios';

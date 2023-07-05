@@ -1,38 +1,20 @@
 <template>
 	<div class="w-2/3 mx-auto lg:max-w-3xl items center">
-		<p class="text-justify font-primary">
-			Jermaine Lamarr Cole (born January 28, 1985) is a German-born American
-			rapper, singer, songwriter, and record producer. Born on a military base
-			in Germany and raised in Fayetteville, North Carolina, Cole initially
-			gained recognition as a rapper following the release of his debut mixtape,
-			The Come Up, in early 2007. Intent on further pursuing a musical career,
-			he went on to release two additional mixtapes, The Warm Up (2009) and
-			Friday Night Lights (2010) both to critical acclaim, after signing to
-			Jay-Z's Roc Nation imprint in 2009. Cole released his debut studio album,
-			Cole World: The Sideline Story, in 2011. It debuted at number one on the
-			US Billboard 200. His next album, Born Sinner (2013), also topped the
-			Billboard 200. Moving into more conscious themes, 2014 Forest Hills Drive
-			(2014) topped the Billboard 200 and earned Cole a Best Rap Album
-			nomination at the 2015 Grammy Awards. His jazz influenced fourth album, 4
-			Your Eyez Only (2016), debuted at number one on the Billboard 200. Cole's
-			fifth album, KOD (2018), became his fifth number-one album on the
-			Billboard 200 and featured a then-record six simultaneous top twenty hits
-			on the Billboard Hot 100, tying with the Beatles. His sixth studio album,
-			The Off-Season, which earned him his sixth number-one album, was released
-			on May 14, 2021. Self-taught on piano, Cole also acts as a producer
-			alongside his rap career, producing singles for artists such as Kendrick
-			Lamar and Janet Jackson, as well as handling the majority of the
-			production in his own projects. He has also developed other ventures,
-			including Dreamville Records, as well as a non-profit organization called
-			the Dreamville Foundation. Dreamville's compilation album Revenge of the
-			Dreamers III (2019) debuted at number one on the Billboard 200 and was
-			nominated for Best Rap Album at the 2020 Grammy Awards. In January 2015,
-			Cole decided to house single mothers rent-free at his childhood home in
-			Fayetteville, North Carolina. Cole has won a Grammy Award for Best Rap
-			Song, a Billboard Music Award for Top Rap Album, three Soul Train Music
-			Awards, and 8 BET Hip Hop Awards. All five of his albums have been
-			certified platinum by the Recording Industry Association of America
-			(RIAA), as well as Revenge of the Dreamers III.
+		<p class="text-justify">
+			<span class="ml-6 font-semibold">Young Kenny</span> is an award winning
+			producer currently residing in Los Angeles by way of Vancouver B.C. He has
+			been featured for his music work in publications such as Forbes Magazine,
+			Vice, MTV, NY Post, Complex, The Source, Fader Magazine and many more. He
+			has worked on a variety of EA Sports titles such as Fifa17, Fifa15,UFC2,
+			NBA Live 13, NBA 2105, NBA 2018, Fight Night4, Fight Night Champion, SSX
+			Deadly Descents, and many more. He has also composed music for commercial
+			campaigns and products for brands such as Axe Bodyspray, Converse, Movado
+			Watches, Sport Chek, Toronto Raptors, Redbull, Boombotix, Rival Games and
+			Native Instruments to name a few. He has worked on projects with musicians
+			all over the globe. Some of these include Redman, Method Man, RZA,
+			!llmind, Eekamouse, Pegboard Nerds, Fatherdude, Far East Movement, Desirée
+			Dawson, Tiger JK, Junoflo, Tasha Yoon Mirae, Dawid Kwiatkowski, Skyzoo,
+			Joell Ortiz, Oktavian, Sleep Steady, Tigarah, M.I.B amongst others.
 		</p>
 	</div>
 </template>
