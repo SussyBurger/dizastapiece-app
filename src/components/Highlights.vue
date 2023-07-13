@@ -2,8 +2,6 @@
 	import { ref } from 'vue';
 	import { RouterLink } from 'vue-router';
 
-	import Play from 'vue-material-design-icons/Play.vue';
-
 	let isHover = ref(false);
 	const props = defineProps({ by: String, song: String, image: String });
 </script>
@@ -18,17 +16,18 @@
 			@mouseenter="isHover = true"
 			@mouseleave="isHover = false"
 		>
+			<!-- <div class="absolute w-full h-full bg-black"></div> -->
 			<div
+				class="absolute z-10 w-full h-full bg-black rounded-md"
 				:class="
 					isHover
-						? 'transition ease-in duration-150 bg-opacity-30'
-						: 'transition ease-out duration-150 bg-opacity-5'
+						? 'transition ease-in duration-150 bg-opacity-50'
+						: 'transition ease-out duration-150 bg-opacity-30'
 				"
-				class="absolute z-10 w-full h-full bg-black rounded-md"
 			>
 				<div class="absolute z-50 pt-4 pl-4">
 					<div
-						class="inline-block px-2 py-1 text-sm text-center text-white bg-black rounded-md bg-opacity-40"
+						class="inline-block px-2 py-1 text-sm text-center text-white bg-black rounded-md font-primary bg-opacity-40"
 					>
 						Album
 					</div>
@@ -37,13 +36,9 @@
 				</div>
 			</div>
 
-			<!-- 			<div class="absolute z-45 bottom-3 left-3 rounded-full bg-white p-1.5">
-				<Play :size="27" class="text-black" />
-			</div> -->
-
 			<img
 				:src="image"
-				class="rounded-lg"
+				class="w-[800px] h-[300px] object-cover rounded-lg"
 			/>
 		</div>
 	</RouterLink>

@@ -12,6 +12,7 @@ import Profile from '../views/profile/Profile.vue';
 import NewsSetting from '../views/profile/NewsSetting.vue';
 import Devices from '../views/profile/Devices.vue';
 import UserPlaylist from '../views/profile/UserPlaylist.vue';
+import UserPlaylist2 from '../views/profile/UserPlaylist2.vue';
 
 import Bio from '../views/artist/Bio.vue';
 import TopTracks from '../views/artist/TopTracks.vue';
@@ -48,6 +49,11 @@ const router = createRouter({
 			path: '/userplaylist',
 			name: 'userplaylist',
 			component: UserPlaylist,
+		},
+		{
+			path: '/userplaylist2',
+			name: 'userplaylist2',
+			component: UserPlaylist2,
 		},
 		{
 			path: '/categories',

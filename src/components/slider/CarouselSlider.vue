@@ -42,7 +42,7 @@
 	<div>
 		<div class="flex justify-between pb-5 ml-8 mr-6">
 			<RouterLink
-				to="/toptracks"
+				to="/search"
 				@mouseenter="isHoverCategory = true"
 				@mouseleave="isHoverCategory = false"
 				:class="

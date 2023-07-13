@@ -36,7 +36,7 @@
 	<div class="max-w-[875px] mx-8 lg:mx-40 lg:max-w-6xl">
 		<div class="flex items-center mx-auto">
 			<img
-				:src="`${this.userProfile ? this.userProfile.images[0].url : ''}`"
+				:src="`${this.userProfile ? this.userProfile.images[1].url : ''}`"
 				class="flex-none rounded-full"
 				width="150"
 			/>
@@ -111,7 +111,10 @@
 					<button
 						class="flex items-center gap-1 rounded-full px-4 py-2 bg-[#d1d1d6] dark:bg-[#303036] text-[#1a1a1a] dark:text-[#f3f3f3]"
 					>
-						<img src="/images/google.png" class="w-5" />
+						<img
+							src="/images/google.png"
+							class="w-5"
+						/>
 						<span class="text-sm font-semibold uppercase truncate">
 							Connected with Google
 						</span>

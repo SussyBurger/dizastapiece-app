@@ -6,8 +6,8 @@
 	"tracks": [
 		{
 			"id": 1,
-			"name": "Reaktion",
-			"path": "/songs/Reaktion.mp3",
+			"name": "Bigger Man",
+			"path": "/songs/Bigger Man.mp3",
 			"lyrics": false
 		},
 		{
@@ -18,8 +18,8 @@
 		},
 		{
 			"id": 3,
-			"name": "Bigger Man",
-			"path": "/songs/Bigger Man.mp3",
+			"name": "Sick In The Head",
+			"path": "/songs/Sick In The Head.mp3",
 			"lyrics": false
 		},
 		{

@@ -47,7 +47,7 @@
 
 				<div class="flex gap-4 items-center justify-start bottom-0 mb-1.5">
 					<button
-						class="p-2.5 px-6 rounded-full bg-[#ef5465] hover:bg-[#da292a] text-white"
+						class="p-2.5 px-6 rounded-full bg-[#ef5465] hover:bg-[#E4062F] text-white"
 						@click="playFunc()"
 					>
 						<div

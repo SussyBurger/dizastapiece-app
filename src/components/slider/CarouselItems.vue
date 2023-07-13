@@ -13,7 +13,7 @@
 <template>
 	<div class="pl-8">
 		<RouterLink
-			to="/artist"
+			to="/search"
 			class="cursor-pointer"
 		>
 			<div

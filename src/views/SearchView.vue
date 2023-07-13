@@ -67,7 +67,8 @@
 										'transition ease-in duration-200 bg-opacity-100':
 											selectedTrack === track.preview_url && track.id,
 										'transition ease-out duration-200 opacity-0':
-											selectedTrack !== track.preview_url,
+											selectedTrack !== track.preview_url ||
+											track.preview_url === null,
 									}"
 									class="absolute left-2 z-20 p-2 rounded-full bg-white hover:bg-[#ef5465] text-black hover:text-white cursor-pointer ease-out duration-200"
 									@click="playTrack(track.preview_url, track.album.name)"
@@ -324,7 +325,6 @@
 			handleClickOutside(event) {
 				const target = event.target;
 				const dropdownMenu = document.querySelector('#playlist-dropdown');
-
 				if (!dropdownMenu.contains(target)) {
 					this.selectedTrackId = null;
 				}

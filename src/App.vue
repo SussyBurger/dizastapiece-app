@@ -56,7 +56,7 @@
 						</div>
 					</div>
 
-					<div class="items-center justify-center z-100">
+					<div class="items-center justify-center select-none z-100">
 						<!-- Profile Button -->
 						<button
 							class="truncate lg:w-48 flex text-[#444] dark:text-[#f3f3f3] justify-center items-center text-center text-sm p-3 mr-8 gap-2 font-medium hover:text-[#ef5465] dark:hover:text-[#ef5465] rounded-full bg-[#e6e6e6] dark:bg-[#23232d] border-none ease-out duration-200"
@@ -168,7 +168,7 @@
 
 		<!-- Side Nav -->
 		<aside
-			class="fixed hidden font-primary lg:flex flex-col top-14 overflow-hidden min-h-screen bg-[#F2F2F2] dark:bg-[#191922] border-r border-[#e0e0e0] dark:border-[#32323D] ease-out duration-300 z-50"
+			class="fixed hidden font-[600] lg:flex flex-col top-14 overflow-hidden min-h-screen bg-[#F2F2F2] dark:bg-[#191922] border-r border-[#e0e0e0] dark:border-[#32323D] ease-out duration-300 z-50"
 			:class="`${is_expanded ? 'w-60 ' : 'w-16'}`"
 		>
 			<div
@@ -281,7 +281,7 @@
 								: 'opacity-0 ease-out duration-300'
 						}`"
 					>
-						Cattegories
+						Categories
 					</span>
 				</RouterLink>
 			</div>
@@ -313,8 +313,8 @@
 
 		<aside
 			id="sideNavOverlay"
-			class="fixed flex font-primary flex-col lg:hidden min-h-screen bg-[#F2F2F2] dark:bg-[#191922] border-r border-[#e0e0e0] dark:border-[#32323D] ease-out duration-200 z-50"
-			:class="`${is_expanded ? 'w-60 ' : ' -ml-64'}`"
+			class="fixed flex font-[600] flex-col lg:hidden min-h-screen bg-[#F2F2F2] dark:bg-[#191922] border-r border-[#e0e0e0] dark:border-[#32323D] ease-out duration-200 z-50"
+			:class="`${is_expanded ? 'w-60 ' : '-ml-64'}`"
 		>
 			<div
 				class="truncate ease-out duration-300 flex items-center justify-end bg-[#d9d9d9] dark:bg-[#141418]"
@@ -426,10 +426,10 @@
 
 	<MusicPlayer v-if="currentTrack" />
 
-	<div
+	<!-- 	<div
 		class="w-full h-full"
 		@click="hideProfile"
-	></div>
+	></div> -->
 </template>
 
 <script setup>
@@ -438,7 +438,6 @@
 
 	import MusicPlayer from './components/MusicPlayer.vue';
 
-	import Fire from 'vue-material-design-icons/Fire.vue';
 	import Magnify from 'vue-material-design-icons/Magnify.vue';
 	import BellOutline from 'vue-material-design-icons/BellOutline.vue';
 	import Menu from 'vue-material-design-icons/Menu.vue';

@@ -248,7 +248,7 @@
 
 		<div class="px-8 mt-8">
 			<div class="inline-block text-xl font-semibold dark:text-white">
-				Hightlights
+				Highlights
 			</div>
 
 			<div class="py-3"></div>
@@ -256,16 +256,16 @@
 			<div class="flex items-center justify-center w-full gap-8 mx-auto">
 				<div class="w-1/2 py-4 rounded-lg">
 					<Highlights
-						by="Some Artist 1"
-						song="Random Song 1"
-						image="https://picsum.photos/id/274/800/300"
+						by="Lil Uzi Vert"
+						song="Pink Tape"
+						image="https://i.scdn.co/image/ab67616d0000b273a0e7694a73abed7372474d69"
 					/>
 				</div>
 				<div class="w-1/2 py-4 rounded-lg">
 					<Highlights
-						by="Some Artist 2"
-						song="Random Song 2"
-						image="https://picsum.photos/id/299/800/300"
+						by="Tainy"
+						song="DATA"
+						image="https://i.scdn.co/image/ab67616d0000b273de7b9af78fbdda96c5a0635b"
 					/>
 				</div>
 			</div>
